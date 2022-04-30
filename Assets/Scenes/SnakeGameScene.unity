@@ -228,6 +228,8 @@ MonoBehaviour:
   upLeftVerticalSnakePrefab: {fileID: 5057447945565681460, guid: 3ad3cf19e9b34b44cbf05bd23fa69e89, type: 3}
   upRightHorizontalSnakePrefab: {fileID: 3106451326967040566, guid: 6a6f732af895e82478710927f185e7d0, type: 3}
   upRightVerticalSnakePrefab: {fileID: 2061933473352179957, guid: e3830cb1f3df78e469d8583fd91f3289, type: 3}
+  snakeNumber: 6
+  selectedSnake: {fileID: 0}
 --- !u!1 &1622304887
 GameObject:
   m_ObjectHideFlags: 0

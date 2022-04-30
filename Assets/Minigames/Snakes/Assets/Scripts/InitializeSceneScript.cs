@@ -13,10 +13,16 @@ public class InitializeSceneScript : MonoBehaviour
     public GameObject upRightHorizontalSnakePrefab;
     public GameObject upRightVerticalSnakePrefab;
 
+    public int snakeNumber;
+    public GameObject selectedSnake;
+
+    private GameObject[] snakes;
+
     void Awake()
     {
         Debug.Log("Debug Snake - awake");
 
+        snakes = new GameObject[Mathf.Max(snakeNumber, 6)];
         generateSnakes();
     }
 
@@ -37,26 +43,39 @@ public class InitializeSceneScript : MonoBehaviour
         GameObject snake = Instantiate(downRightVerticalSnakePrefab);
         snake.GetComponent<SpriteRenderer>().color = getRandomColor();
         snake.transform.position = new Vector2(-6.1f, -0.44f);
+        snake.name = "Snake";
+        snakes[0] = snake;
+        selectedSnake = snake;
 
-        GameObject snake2 = Instantiate(downRightVerticalSnakePrefab);
+        GameObject snake1 = Instantiate(downRightVerticalSnakePrefab);
+        snake1.GetComponent<SpriteRenderer>().color = getRandomColor();
+        snake1.transform.position = new Vector2(-4.86f, -1.61f);
+        snake1.name = "Snake 1";
+        snakes[1] = snake1;
+
+        GameObject snake2 = Instantiate(upLeftVerticalSnakePrefab);
         snake2.GetComponent<SpriteRenderer>().color = getRandomColor();
-        snake2.transform.position = new Vector2(-4.86f, -1.61f);
+        snake2.transform.position = new Vector2(-3.15f, 1.43f);
+        snake2.name = "Snake 2";
+        snakes[2] = snake2;
 
-        GameObject snake3 = Instantiate(upLeftVerticalSnakePrefab);
+        GameObject snake3 = Instantiate(downLeftVerticalSnakePrefab);
         snake3.GetComponent<SpriteRenderer>().color = getRandomColor();
-        snake3.transform.position = new Vector2(-3.15f, 1.43f);
+        snake3.transform.position = new Vector2(0.11f, -1.76f);
+        snake3.name = "Snake 3";
+        snakes[3] = snake3;
 
         GameObject snake4 = Instantiate(downLeftVerticalSnakePrefab);
         snake4.GetComponent<SpriteRenderer>().color = getRandomColor();
-        snake4.transform.position = new Vector2(0.11f, -1.76f);
+        snake4.transform.position = new Vector2(2.2f, -0.47f);
+        snake4.name = "Snake 4";
+        snakes[4] = snake4;
 
-        GameObject snake5 = Instantiate(downLeftVerticalSnakePrefab);
+        GameObject snake5 = Instantiate(downLeftHorizontalSnakePrefab);
         snake5.GetComponent<SpriteRenderer>().color = getRandomColor();
-        snake5.transform.position = new Vector2(2.2f, -0.47f);
-
-        GameObject snake6 = Instantiate(downLeftHorizontalSnakePrefab);
-        snake6.GetComponent<SpriteRenderer>().color = getRandomColor();
-        snake6.transform.position = new Vector2(6.42f, -3.96f);
+        snake5.transform.position = new Vector2(6.42f, -3.96f);
+        snake5.name = "Snake 5";
+        snakes[5] = snake5;
     }
 
     Color getRandomColor()
