@@ -64,6 +64,9 @@ public class Dragger : MonoBehaviour
             }
             else{
                 SomethingIsBeingDragged = true;
+                // Play ing audio
+                ingSound.Play();
+
             }
         }
         
