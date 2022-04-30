@@ -476,10 +476,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 637ed82f75646334e86ce9b7614a1aa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scenePaths:
-  - Assets/Scenes/Intro.unity
-  - Assets/Scenes/Room.unity
   _disableInEditor: 1
+  introScenePath: Assets/Scenes/Intro.unity
+  roomScenePath: Assets/Scenes/Room.unity
+  snakeScenePath: Assets/Scenes/SnakeGameScene.unity
+  cauldrenScenePath: 
+  starsScenePath: 
 --- !u!1 &2106641893
 GameObject:
   m_ObjectHideFlags: 0

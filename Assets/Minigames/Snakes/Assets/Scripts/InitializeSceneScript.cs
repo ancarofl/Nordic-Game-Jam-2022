@@ -39,7 +39,10 @@ public class InitializeSceneScript : MonoBehaviour
 
     void Awake()
     {
-        Debug.Log("Debug Snake - awake");
+        //Debug.Log("Debug Snake - awake");
+
+        /* TODO: Look into mouse click selection and reenable the cursor. */
+        ControlManager.Instance.HideCursor();
 
         snakes = new GameObject[Mathf.Max(snakeNumber, 6)];
         generateSnakes();
@@ -48,7 +51,7 @@ public class InitializeSceneScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("Debug Snake - start");
+       // Debug.Log("Debug Snake - start");
     }
 
     // Update is called once per frame
@@ -56,24 +59,34 @@ public class InitializeSceneScript : MonoBehaviour
     {
         var controls = ControlManager.Instance.Controls;
 
+        // Left
+        if (controls.Gameplay.SelectLeft.triggered)
+        {
+            //Debug.Log("LEFT");
+
+            SelectPreviousSnake();
+        }
+        // Right
+        if (controls.Gameplay.SelectRight.triggered)
+        {
+            //Debug.Log("RIGHT");
+
+            SelectNextSnake();
+        }
         // Q
         if (controls.Gameplay.Action1.triggered)
         {
-            Debug.Log("Q => Kill");
-
-            SelectPreviousSnake();
+            //Debug.Log("Q => Kill");
         }
         // E
         else if (controls.Gameplay.Action2.triggered)
         {
-            Debug.Log("E => Pat");
-
-            SelectNextSnake();
+            //Debug.Log("E => Pat");
         }
         // F. Change this to Action3 (R) in case the other minigames only use 3 buttons.
         else if (controls.Gameplay.Action4.triggered)
         {
-            Debug.Log("F => Feed");
+           // Debug.Log("F => Feed");
         }
     }
 
@@ -118,49 +131,49 @@ public class InitializeSceneScript : MonoBehaviour
         // Instantiate current outline
         if (selectedSnake.transform.CompareTag("DLH"))
         {
-            Debug.Log("DLH");
+            //Debug.Log("DLH");
             selectedSnakeGlow = Instantiate(downLeftHorizontalSnakeGlowPrefab);
             selectedSnakeGlow.transform.position = new Vector2(selectedSnake.transform.position.x + 0.05f, selectedSnake.transform.position.y - 0.001f);
         }
         else if (selectedSnake.transform.CompareTag("DLV"))
         {
-            Debug.Log("DLV");
+            //Debug.Log("DLV");
             selectedSnakeGlow = Instantiate(downLeftVerticalSnakeGlowPrefab);
             selectedSnakeGlow.transform.position = new Vector2(selectedSnake.transform.position.x - 0.01f, selectedSnake.transform.position.y - 0.026f); ;
         }
         else if (selectedSnake.transform.CompareTag("DRH"))
         {
-            Debug.Log("DRH");
+            //Debug.Log("DRH");
             selectedSnakeGlow = Instantiate(downRightHorizontalSnakeGlowPrefab);
             selectedSnakeGlow.transform.position = new Vector2(selectedSnake.transform.position.x + 2.729289f, selectedSnake.transform.position.y + 0.2612587f);
         }
         else if (selectedSnake.transform.CompareTag("DRV"))
         {
-            Debug.Log("DRV");
+            //Debug.Log("DRV");
             selectedSnakeGlow = Instantiate(downRightVerticalSnakeGlowPrefab);
             selectedSnakeGlow.transform.position = new Vector2(selectedSnake.transform.position.x + 0.037f, selectedSnake.transform.position.y - 0.018f);
         }
         else if (selectedSnake.transform.CompareTag("ULH"))
         {
-            Debug.Log("ULH");
+            //Debug.Log("ULH");
             selectedSnakeGlow = Instantiate(upLeftHorizontalSnakeGlowPrefab);
             selectedSnakeGlow.transform.position = new Vector2(selectedSnake.transform.position.x + 0.05f, selectedSnake.transform.position.y - 0.01f);
         }
         else if (selectedSnake.transform.CompareTag("ULV"))
         {
-            Debug.Log("ULV");
+            //Debug.Log("ULV");
             selectedSnakeGlow = Instantiate(upLeftVerticalSnakeGlowPrefab);
             selectedSnakeGlow.transform.position = new Vector2(selectedSnake.transform.position.x - 0.01f, selectedSnake.transform.position.y + 0.037f);
         }
         else if (selectedSnake.transform.CompareTag("URH"))
         {
-            Debug.Log("URH");
+            //Debug.Log("URH");
             selectedSnakeGlow = Instantiate(upRightHorizontalSnakeGlowPrefab);
             selectedSnakeGlow.transform.position = new Vector2(selectedSnake.transform.position.x + 2.785f, selectedSnake.transform.position.y - 0.15f);
         }
         else if (selectedSnake.transform.CompareTag("URV"))
         {
-            Debug.Log("URV");
+            //Debug.Log("URV");
             selectedSnakeGlow = Instantiate(upRightHorizontalSnakeGlowPrefab);
             selectedSnakeGlow.transform.position = new Vector2(selectedSnake.transform.position.x - 0.01f, selectedSnake.transform.position.y + 0.037f);
         }
