@@ -482,6 +482,11 @@ MonoBehaviour:
   snakeScenePath: Assets/Scenes/SnakeGameScene.unity
   cauldrenScenePath: 
   starsScenePath: 
+  EndBadScenePath: Assets/Scenes/End bad.unity
+  EndGoodScenePath: Assets/Scenes/End good.unity
+  snakeGameEnabled: 1
+  cauldrenGameEnabled: 1
+  starGameEnabled: 1
 --- !u!1 &2106641893
 GameObject:
   m_ObjectHideFlags: 0

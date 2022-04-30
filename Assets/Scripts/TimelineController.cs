@@ -15,6 +15,8 @@ public class TimelineController : MonoBehaviour
     public string snakeScenePath;
     public string cauldrenScenePath;
     public string starsScenePath;
+    public string EndBadScenePath;
+    public string EndGoodScenePath;
 
     public bool snakeGameEnabled = true;
     public bool cauldrenGameEnabled = false;
@@ -61,6 +63,11 @@ public class TimelineController : MonoBehaviour
     public void IntroFinished()
     {
         LoadScene(roomScenePath);
+    }
+
+    public void EndSceneFinished()
+    {
+        SceneManager.LoadScene(0);
     }
 
 }
