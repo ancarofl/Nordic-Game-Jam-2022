@@ -3,7 +3,15 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - DLH
+  - DLV
+  - DRH
+  - DRV
+  - ULH
+  - ULV
+  - URH
+  - URV
   layers:
   - Default
   - TransparentFX

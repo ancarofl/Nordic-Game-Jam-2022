@@ -55,5 +55,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: URVSnake
       objectReference: {fileID: 0}
+    - target: {fileID: 5057447945565681460, guid: 3ad3cf19e9b34b44cbf05bd23fa69e89, type: 3}
+      propertyPath: m_TagString
+      value: URV
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ad3cf19e9b34b44cbf05bd23fa69e89, type: 3}

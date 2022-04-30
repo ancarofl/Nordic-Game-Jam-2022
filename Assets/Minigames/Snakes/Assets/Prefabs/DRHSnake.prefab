@@ -55,5 +55,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: DRHSnake
       objectReference: {fileID: 0}
+    - target: {fileID: 6980243656182869017, guid: 2659c4c0a9b48b84091e692c931d092f, type: 3}
+      propertyPath: m_TagString
+      value: DRH
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2659c4c0a9b48b84091e692c931d092f, type: 3}

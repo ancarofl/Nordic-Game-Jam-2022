@@ -11,6 +11,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: URHSnake
       objectReference: {fileID: 0}
+    - target: {fileID: 6815856493512499186, guid: 50b050a10b47ff740908cf2d36f41138, type: 3}
+      propertyPath: m_TagString
+      value: URH
+      objectReference: {fileID: 0}
     - target: {fileID: 6815856493512499187, guid: 50b050a10b47ff740908cf2d36f41138, type: 3}
       propertyPath: m_RootOrder
       value: 0

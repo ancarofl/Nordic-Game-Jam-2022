@@ -201,7 +201,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1324742521}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.073, y: -1.794, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -221,15 +221,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   downLeftHorizontalSnakePrefab: {fileID: 6980243656182869017, guid: 2659c4c0a9b48b84091e692c931d092f, type: 3}
+  downLeftHorizontalSnakeGlowPrefab: {fileID: 953678973034289522, guid: a33c782e75f4da344890ba8fba50d6fe, type: 3}
   downLeftVerticalSnakePrefab: {fileID: 409259969508294663, guid: 96c136034045cb64b95ff6384c8f181e, type: 3}
+  downLeftVerticalSnakeGlowPrefab: {fileID: 684920039216537320, guid: 21a358ca94a6b8f49b38d1b6747a69ee, type: 3}
   downRightHorizontalSnakePrefab: {fileID: 3499232746636212012, guid: 915e05564a45d5542bb1b82f52d70918, type: 3}
+  downRightHorizontalSnakeGlowPrefab: {fileID: 3159351807017771724, guid: 5f3bfacff7fe5b3429986e1a731a1e92, type: 3}
   downRightVerticalSnakePrefab: {fileID: 114715589003999912, guid: c9f5f327df010b7489ca7ebc803e9dc3, type: 3}
+  downRightVerticalSnakeGlowPrefab: {fileID: 5501016506479697855, guid: d4b7e4e4f17164646b4fef379548b744, type: 3}
   upLeftHorizontalSnakePrefab: {fileID: 6815856493512499186, guid: 50b050a10b47ff740908cf2d36f41138, type: 3}
+  upLeftHorizontalSnakeGlowPrefab: {fileID: 195440944737973826, guid: 7c2bc10159282ad4889d53df0e11ff70, type: 3}
   upLeftVerticalSnakePrefab: {fileID: 5057447945565681460, guid: 3ad3cf19e9b34b44cbf05bd23fa69e89, type: 3}
+  upLeftVerticalSnakeGlowPrefab: {fileID: 4353116845573212209, guid: 7c662065c69ef604eb1287220222c272, type: 3}
   upRightHorizontalSnakePrefab: {fileID: 3106451326967040566, guid: 6a6f732af895e82478710927f185e7d0, type: 3}
+  upRightHorizontalSnakeGlowPrefab: {fileID: 8859012589446428195, guid: 5ffd14585117c8a4986100ffab9a422c, type: 3}
   upRightVerticalSnakePrefab: {fileID: 2061933473352179957, guid: e3830cb1f3df78e469d8583fd91f3289, type: 3}
+  upRightVerticalSnakeGlowPrefab: {fileID: 206916207844083579, guid: 649ba3289258cf741b5d6ee275781c7a, type: 3}
   snakeNumber: 6
-  selectedSnake: {fileID: 0}
 --- !u!1 &1622304887
 GameObject:
   m_ObjectHideFlags: 0
