@@ -41,6 +41,9 @@ public class InitializeSceneScript : MonoBehaviour
     {
         //Debug.Log("Debug Snake - awake");
 
+        /* TODO: Look into mouse click selection and reenable the cursor. */
+        ControlManager.Instance.HideCursor();
+
         snakes = new GameObject[Mathf.Max(snakeNumber, 6)];
         generateSnakes();
     }
