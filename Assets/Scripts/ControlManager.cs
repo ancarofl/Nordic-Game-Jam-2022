@@ -12,13 +12,18 @@ public class ControlManager : MonoBehaviour
     public MainControls Controls => _controls;
 
     [SerializeField] GameObject _cursor;
+    [SerializeField] SpriteRenderer _cursorSpriteRenderer;
 
     private bool _lastInputWasGamePad = false;
 
     public bool IsCursorVisible { get; private set; }
 
+    public Vector3 MouseCursorWorldPos => _cursor.transform.position;
+    public Vector3 MouseCursorScreenPos => Camera.main.WorldToScreenPoint(_cursor.transform.position);
+
     public float gamepadCursorSpeed = 10f;
     public float mouseSpeed = 10f;
+
 
     void Awake()
     {
@@ -27,8 +32,7 @@ public class ControlManager : MonoBehaviour
         _controls.Enable();
 
         Cursor.visible = false;
-        //ShowCursor();
-        HideCursor();
+        ShowCursor();
     }
 
     public void ShowCursor()
@@ -60,8 +64,18 @@ public class ControlManager : MonoBehaviour
                 _cursor.transform.position += (Vector3)Mouse.current.delta.ReadValue() * mouseSpeed;
 
             var camera = Camera.main;
-            var cameraRect = camera.rect;
-            //float min = camera.ScreenToWorldPoint(camera.rect.min);
+            Vector2 min = camera.ScreenToWorldPoint(camera.pixelRect.min);
+            Vector2 max = camera.ScreenToWorldPoint(camera.pixelRect.max);
+
+            var currentCursorPosition = _cursor.transform.position;
+            _cursor.transform.position = new Vector2(Mathf.Min(max.x, currentCursorPosition.x), Mathf.Min(max.y, currentCursorPosition.y));
+            currentCursorPosition = _cursor.transform.position;
+            _cursor.transform.position = new Vector2(Mathf.Max(min.x, currentCursorPosition.x), Mathf.Max(min.y, currentCursorPosition.y));
+
+            if (Controls.Gameplay.Click.IsPressed()) 
+                _cursorSpriteRenderer.color = new Color(1f, 1f, 1f, 0.9f);
+            else
+                _cursorSpriteRenderer.color = new Color(1f, 1f, 1f, 0.6f);
         }
 
         //_cursor.transform.position = Camera.main.ScreenToWorldPoint()

@@ -89,6 +89,15 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Click"",
+                    ""type"": ""Button"",
+                    ""id"": ""cc931bb7-d3f9-44f4-bf08-4669a3589fb0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -311,6 +320,39 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                     ""action"": ""SelectRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f2712b07-a378-473a-8fa2-def370ff8d95"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""43f1853b-bff6-4f83-be16-7516287271d9"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b57c1c95-60eb-40a2-8da1-335118a69a9d"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -326,6 +368,7 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
         m_Gameplay_Movement = m_Gameplay.FindAction("Movement", throwIfNotFound: true);
         m_Gameplay_SelectLeft = m_Gameplay.FindAction("SelectLeft", throwIfNotFound: true);
         m_Gameplay_SelectRight = m_Gameplay.FindAction("SelectRight", throwIfNotFound: true);
+        m_Gameplay_Click = m_Gameplay.FindAction("Click", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -392,6 +435,7 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Movement;
     private readonly InputAction m_Gameplay_SelectLeft;
     private readonly InputAction m_Gameplay_SelectRight;
+    private readonly InputAction m_Gameplay_Click;
     public struct GameplayActions
     {
         private @MainControls m_Wrapper;
@@ -403,6 +447,7 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
         public InputAction @Movement => m_Wrapper.m_Gameplay_Movement;
         public InputAction @SelectLeft => m_Wrapper.m_Gameplay_SelectLeft;
         public InputAction @SelectRight => m_Wrapper.m_Gameplay_SelectRight;
+        public InputAction @Click => m_Wrapper.m_Gameplay_Click;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -433,6 +478,9 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                 @SelectRight.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSelectRight;
                 @SelectRight.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSelectRight;
                 @SelectRight.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSelectRight;
+                @Click.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnClick;
+                @Click.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnClick;
+                @Click.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnClick;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -458,6 +506,9 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                 @SelectRight.started += instance.OnSelectRight;
                 @SelectRight.performed += instance.OnSelectRight;
                 @SelectRight.canceled += instance.OnSelectRight;
+                @Click.started += instance.OnClick;
+                @Click.performed += instance.OnClick;
+                @Click.canceled += instance.OnClick;
             }
         }
     }
@@ -471,5 +522,6 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnSelectLeft(InputAction.CallbackContext context);
         void OnSelectRight(InputAction.CallbackContext context);
+        void OnClick(InputAction.CallbackContext context);
     }
 }

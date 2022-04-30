@@ -237,6 +237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cursor: {fileID: 699569173}
+  _cursorSpriteRenderer: {fileID: 699569175}
   gamepadCursorSpeed: 0.05
   mouseSpeed: 0.01
 --- !u!4 &1118919779
