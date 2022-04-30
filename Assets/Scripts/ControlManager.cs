@@ -50,7 +50,7 @@ public class ControlManager : MonoBehaviour
 
     void LateUpdate()
     {
-        if (IsCursorVisible)
+        if (IsCursorVisible && Camera.main)
         {
             var mouseMovement = Mouse.current.delta.ReadValue();
             var controlsMovement = Controls.Gameplay.Movement.ReadValue<Vector2>();
