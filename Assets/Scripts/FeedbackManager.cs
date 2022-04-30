@@ -9,6 +9,7 @@ public class FeedbackManager : MonoBehaviour
 
     public AudioSource goodSound;
     public AudioSource badSound;
+    public Timer timer;
 
     void Awake()
     {
@@ -23,6 +24,7 @@ public class FeedbackManager : MonoBehaviour
     public void DidBad()
     {
         badSound.Play();
+        timer.RemoveTime(10f);
     }
 
     // Update is called once per frame

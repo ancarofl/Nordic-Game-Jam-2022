@@ -10,6 +10,8 @@ public class TimelineController : MonoBehaviour
     string _currentScene = null;
     [SerializeField] bool _disableInEditor = true;
 
+    public Timer timer;
+
     public string introScenePath;
     public string roomScenePath;
     public string snakeScenePath;
@@ -63,6 +65,7 @@ public class TimelineController : MonoBehaviour
     public void IntroFinished()
     {
         LoadScene(roomScenePath);
+        timer.StartTimer();
     }
 
     public void EndSceneFinished()
@@ -70,4 +73,8 @@ public class TimelineController : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
+    public void TimeRanOut()
+    {
+        LoadScene(EndBadScenePath);
+    }
 }
