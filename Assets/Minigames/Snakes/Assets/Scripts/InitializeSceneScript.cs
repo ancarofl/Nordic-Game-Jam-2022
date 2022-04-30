@@ -35,7 +35,23 @@ public class InitializeSceneScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        var controls = ControlManager.Instance.Controls;
+
+        // Q
+        if (controls.Gameplay.Action1.triggered)
+        {
+            Debug.Log("Q => Kill");
+        }
+        // E
+        else if (controls.Gameplay.Action2.triggered)
+        {
+            Debug.Log("E => Pat");
+        }
+        // F. Change this to Action3 (R) in case the other minigames only use 3 buttons.
+        else if (controls.Gameplay.Action4.triggered)
+        {
+            Debug.Log("F => Feed");
+        }
     }
 
     void generateSnakes()
