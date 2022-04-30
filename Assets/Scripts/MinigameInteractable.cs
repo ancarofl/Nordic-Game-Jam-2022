@@ -8,19 +8,43 @@ public class MinigameInteractable : MonoBehaviour
     SpriteRenderer _sprite;
 
     bool _highlighted;
+    bool _disabled = false;
 
     public enum minigame { snakes, cauldren, stars }
     public minigame minigameToPlay;
+
 
     // Start is called before the first frame update
     void Start()
     {
         _sprite = GetComponent<SpriteRenderer>();
+
+        switch (minigameToPlay)
+        {
+            case minigame.snakes:
+                if (!TimelineController.Instance.snakeGameEnabled) Disable();
+                break;
+            case minigame.cauldren:
+                if (!TimelineController.Instance.cauldrenGameEnabled) Disable();
+                break;
+            case minigame.stars:
+                if (!TimelineController.Instance.starGameEnabled) Disable();
+                break;
+        }
+
+        void Disable()
+        {
+            _sprite.color = Color.grey;
+            _disabled = true;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (_disabled)
+            return;
+
         if (_highlighted && ControlManager.Instance.Controls.Gameplay.Action1.triggered)
         {
             switch (minigameToPlay)
@@ -38,7 +62,10 @@ public class MinigameInteractable : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Player")
+        if (_disabled)
+            return;
+
+        if (collision.gameObject.tag == "Player")
         {
             _sprite.color = Color.yellow;
             _highlighted = true;
@@ -47,6 +74,9 @@ public class MinigameInteractable : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (_disabled)
+            return;
+
         if (collision.gameObject.tag == "Player")
         {
             _sprite.color = Color.white;

@@ -16,6 +16,10 @@ public class TimelineController : MonoBehaviour
     public string cauldrenScenePath;
     public string starsScenePath;
 
+    public bool snakeGameEnabled = true;
+    public bool cauldrenGameEnabled = false;
+    public bool starGameEnabled = false;
+
     void Awake()
     {
         Instance = this;
@@ -50,6 +54,7 @@ public class TimelineController : MonoBehaviour
 
     public void PlaySnakes()
     {
+        snakeGameEnabled = false;
         LoadScene(snakeScenePath);
     }
 
