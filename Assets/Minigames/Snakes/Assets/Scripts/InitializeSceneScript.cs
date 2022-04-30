@@ -37,6 +37,17 @@ public class InitializeSceneScript : MonoBehaviour
     private GameObject selectedSnakeGlow;
     private int selectedSnakeIndex;
 
+    /* Used colours trackers. */
+    private int redSnakesCounter = 0;
+    private int greenSnakesCounter = 0;
+    private int blueSnakesCounter = 0;
+    private int whiteSnakesCounter = 0;
+    private int yellowSnakesCounter = 0;
+    private int magentaSnakesCounter = 0;
+    private int orangeSnakesCounter = 0;
+    private int dirtyGreenSnakesCounter = 0;
+    private int pinkSnakesCounter = 0;
+
     void Awake()
     {
         //Debug.Log("Debug Snake - awake");
@@ -46,6 +57,109 @@ public class InitializeSceneScript : MonoBehaviour
 
         snakes = new GameObject[Mathf.Max(snakeNumber, 6)];
         GenerateSnakes();
+        DetermineWinningActionsForSnakeConfiguration(); /* TODO: Rename? */
+    }
+
+    void DetermineWinningActionsForSnakeConfiguration()
+    {
+        Debug.Log("RED SNAKES: " + redSnakesCounter);
+        Debug.Log("GREEN SNAKES: " + greenSnakesCounter);
+        Debug.Log("BLUE SNAKES: " + blueSnakesCounter);
+        Debug.Log("WHITE SNAKES: " + whiteSnakesCounter);
+        Debug.Log("YELOOW SNAKES: " + yellowSnakesCounter);
+        Debug.Log("MAGENTA SNAKES: " + magentaSnakesCounter);
+        Debug.Log("ORANGE SNAKES: " + orangeSnakesCounter);
+        Debug.Log("DIRTY GREEN SNAKES: " + dirtyGreenSnakesCounter);
+        Debug.Log("PINK SNAKES: " + pinkSnakesCounter);
+
+        /* 
+         * Stripped down version of the (static) manual.
+         * 
+         * 
+         * F = FEED
+         * K = KILL
+         * P = PET
+         * S = SKIP
+         * 
+         * 
+             1. Magenta > green? S 1/2 rounded up => WIN
+             2. Red > each other colour? K all => WIN. TO DO: Do something regarding time.
+             3. Green > each other colour? F P F P...
+             4. Yellow > each other colour? P F P F...
+             5. 6 different colours?
+                    DLH: K
+                    DLV: S
+                    DRH: P
+                    DRV: F
+                    ULH: P
+                    ULV: do same action as previous action
+                    URH: S
+                    URV: F OR K OR P OR S
+	        6. 5 orange => LOSE   
+            7. Dirty green > each other colour? horziontal: P OR F, vertical: K
+            8. 0 blue? F P F -> S... => WIN
+            9. 3 pink ? S pink, F rest
+        *
+        *
+        *
+        */
+
+        if (magentaSnakesCounter > greenSnakesCounter)
+        {
+            Debug.Log("1---S 1/2 rounded up.");
+        }
+        else if (
+                 redSnakesCounter > greenSnakesCounter && redSnakesCounter > blueSnakesCounter && redSnakesCounter > whiteSnakesCounter && 
+                 redSnakesCounter > yellowSnakesCounter && redSnakesCounter > magentaSnakesCounter && redSnakesCounter > orangeSnakesCounter &&
+                 redSnakesCounter > dirtyGreenSnakesCounter && redSnakesCounter > pinkSnakesCounter
+                )
+        {
+            Debug.Log("2---K ALL.");
+        }
+        else if (
+                 greenSnakesCounter > redSnakesCounter && greenSnakesCounter > blueSnakesCounter && greenSnakesCounter > whiteSnakesCounter &&
+                 greenSnakesCounter > yellowSnakesCounter && greenSnakesCounter > magentaSnakesCounter && greenSnakesCounter > orangeSnakesCounter &&
+                 greenSnakesCounter > dirtyGreenSnakesCounter && greenSnakesCounter > pinkSnakesCounter
+                )
+        {
+            Debug.Log("3---F P F P...");
+        }
+        else if (
+                 yellowSnakesCounter > redSnakesCounter && yellowSnakesCounter > blueSnakesCounter && yellowSnakesCounter > whiteSnakesCounter &&
+                 yellowSnakesCounter > greenSnakesCounter && yellowSnakesCounter > magentaSnakesCounter && yellowSnakesCounter > orangeSnakesCounter &&
+                 yellowSnakesCounter > dirtyGreenSnakesCounter && yellowSnakesCounter > pinkSnakesCounter
+                )
+        {
+            Debug.Log("4---F P F P...");
+        }
+        /* else if ()
+        {
+            Debug.Log("5---WIP THIS ONE---DLH DRH DLV DRH ULH URH ULV URV");
+        } */
+        else if (orangeSnakesCounter == 5)
+        {
+            Debug.Log("6---LOSS");
+        }
+        else if (
+                 dirtyGreenSnakesCounter > redSnakesCounter && dirtyGreenSnakesCounter > blueSnakesCounter && dirtyGreenSnakesCounter > whiteSnakesCounter &&
+                 dirtyGreenSnakesCounter > yellowSnakesCounter && dirtyGreenSnakesCounter > magentaSnakesCounter && dirtyGreenSnakesCounter > orangeSnakesCounter &&
+                 dirtyGreenSnakesCounter > greenSnakesCounter && dirtyGreenSnakesCounter > pinkSnakesCounter
+                )
+        {
+            Debug.Log("7---H: P OR F; V: K");
+        }
+        else if (blueSnakesCounter == 0)
+        {
+            Debug.Log("8---F P F S...");
+        }
+        else if (pinkSnakesCounter == 3)
+        {
+            Debug.Log("9---S pink F rest.");
+        }
+        else
+        {
+            Debug.Log("10---DLH DRH DLV DRH ULH URH ULV URV");
+        }
     }
 
     // Start is called before the first frame update
@@ -226,24 +340,34 @@ public class InitializeSceneScript : MonoBehaviour
         switch (rn)
         {
             case 1:
+                redSnakesCounter++;
                 return Color.red;
             case 2:
+                greenSnakesCounter++;
                 return Color.green;
             case 3:
+                blueSnakesCounter++;
                 return Color.blue;
             case 4:
+                whiteSnakesCounter++;
                 return Color.white;
             case 5:
+                yellowSnakesCounter++;
                 return Color.yellow;
             case 6:
+                magentaSnakesCounter++;
                 return Color.magenta;
             case 7:
+                orangeSnakesCounter++;
                 return new Color(1, 165 / 255f, 0); // orange
             case 8:
-                return new Color(107 / 255f, 142 / 255f, 35 / 255f); // a green
+                dirtyGreenSnakesCounter++;
+                return new Color(107 / 255f, 142 / 255f, 35 / 255f); // a dirty green
             case 9:
+                pinkSnakesCounter++;
                 return new Color(240 / 255f, 218 / 255f, 245 / 255f); // a light pink
         }
+        greenSnakesCounter++;
         return Color.green;
     }
 }
