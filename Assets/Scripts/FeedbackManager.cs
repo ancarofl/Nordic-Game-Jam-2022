@@ -28,7 +28,7 @@ public class FeedbackManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (ControlManager.Instance.Controls.Gameplay.Action1.triggered) DidGood();
-        if (ControlManager.Instance.Controls.Gameplay.Action2.triggered) DidBad();
+        //if (ControlManager.Instance.Controls.Gameplay.Action1.triggered) DidGood();
+        //if (ControlManager.Instance.Controls.Gameplay.Action2.triggered) DidBad();
     }
 }
