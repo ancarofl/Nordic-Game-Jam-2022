@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,7 +16,7 @@ public class MinigameInteractable : MonoBehaviour
     public Sprite spriteWhenDone;
 
     TimelineController.minigameState state = TimelineController.minigameState.open;
-
+    Tweener shakeTween;
     // Start is called before the first frame update
     void Start()
     {
@@ -78,6 +79,8 @@ public class MinigameInteractable : MonoBehaviour
         {
             _sprite.color = Color.yellow;
             _highlighted = true;
+            shakeTween.Complete();
+            shakeTween = transform.DOShakeRotation(1, new Vector3(0, 0, 1f), 10, 90, false).SetLoops(-1, LoopType.Yoyo);
         }
     }
 
@@ -90,6 +93,8 @@ public class MinigameInteractable : MonoBehaviour
         {
             _sprite.color = Color.white;
             _highlighted = false;
+            shakeTween.Kill();
+            shakeTween = transform.DORotate(new Vector3(0, 0, 0), 0.5f);
         }
     }
 }
