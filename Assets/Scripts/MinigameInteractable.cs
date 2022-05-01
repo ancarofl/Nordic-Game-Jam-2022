@@ -13,6 +13,7 @@ public class MinigameInteractable : MonoBehaviour
     public enum minigame { snakes, cauldren, stars }
     public minigame minigameToPlay;
 
+    public Sprite spriteWhenDone;
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +35,8 @@ public class MinigameInteractable : MonoBehaviour
 
         void Disable()
         {
-            _sprite.color = Color.grey;
+            _sprite.color = Color.white;
+            _sprite.sprite = spriteWhenDone;
             _disabled = true;
         }
     }

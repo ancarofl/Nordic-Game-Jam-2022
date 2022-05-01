@@ -722,7 +722,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 637ed82f75646334e86ce9b7614a1aa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _disableInEditor: 0
+  _disableInEditor: 1
   timer: {fileID: 438938500}
   introScenePath: Assets/Scenes/Intro.unity
   roomScenePath: Assets/Scenes/Room.unity
