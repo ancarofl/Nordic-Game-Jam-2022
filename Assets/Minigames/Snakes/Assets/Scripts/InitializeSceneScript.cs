@@ -70,7 +70,7 @@ public class InitializeSceneScript : MonoBehaviour
 
     void DetermineWinningActionsForSnakeConfiguration()
     {
-        Debug.Log("RED SNAKES: " + redSnakesCounter);
+        /* Debug.Log("RED SNAKES: " + redSnakesCounter);
         Debug.Log("GREEN SNAKES: " + greenSnakesCounter);
         Debug.Log("BLUE SNAKES: " + blueSnakesCounter);
         Debug.Log("WHITE SNAKES: " + whiteSnakesCounter);
@@ -78,7 +78,7 @@ public class InitializeSceneScript : MonoBehaviour
         Debug.Log("MAGENTA SNAKES: " + magentaSnakesCounter);
         Debug.Log("ORANGE SNAKES: " + orangeSnakesCounter);
         Debug.Log("DIRTY GREEN SNAKES: " + dirtyGreenSnakesCounter);
-        Debug.Log("PINK SNAKES: " + pinkSnakesCounter);
+        Debug.Log("PINK SNAKES: " + pinkSnakesCounter); */
 
         /* 
          * Stripped down version of the (static) manual.
@@ -116,7 +116,7 @@ public class InitializeSceneScript : MonoBehaviour
 
         if (magentaSnakesCounter > greenSnakesCounter)
         {
-            Debug.Log("1---S first 1/2 rounded up");
+            //Debug.Log("1---S first 1/2 rounded up");
 
             /* TODO: Round up the division! */
             int firstHalf = snakeNumber / 2;
@@ -137,7 +137,7 @@ public class InitializeSceneScript : MonoBehaviour
                  redSnakesCounter > dirtyGreenSnakesCounter && redSnakesCounter > pinkSnakesCounter
                 )
         {
-            Debug.Log("2---K ALL.");
+            //Debug.Log("2---K ALL.");
 
             for (int i = 0; i < snakeNumber; i++)
             {
@@ -150,7 +150,7 @@ public class InitializeSceneScript : MonoBehaviour
                  greenSnakesCounter > dirtyGreenSnakesCounter && greenSnakesCounter > pinkSnakesCounter
                 )
         {
-            Debug.Log("3---F P F P...");
+            //Debug.Log("3---F P F P...");
 
             for (int i = 0; i < snakeNumber; i++)
             {
@@ -170,7 +170,7 @@ public class InitializeSceneScript : MonoBehaviour
                  yellowSnakesCounter > dirtyGreenSnakesCounter && yellowSnakesCounter > pinkSnakesCounter
                 )
         {
-            Debug.Log("4---P F P F...");
+            //Debug.Log("4---P F P F...");
 
             for (int i = 0; i < snakeNumber; i++)
             {
@@ -190,7 +190,7 @@ public class InitializeSceneScript : MonoBehaviour
         } */
         else if (orangeSnakesCounter == 5)
         {
-            Debug.Log("6---LOSS AS SOON AS ANY ACTION IS TAKEN");
+            //Debug.Log("6---LOSS AS SOON AS ANY ACTION IS TAKEN");
         }
         else if (
                  dirtyGreenSnakesCounter > redSnakesCounter && dirtyGreenSnakesCounter > blueSnakesCounter && dirtyGreenSnakesCounter > whiteSnakesCounter &&
@@ -198,7 +198,7 @@ public class InitializeSceneScript : MonoBehaviour
                  dirtyGreenSnakesCounter > greenSnakesCounter && dirtyGreenSnakesCounter > pinkSnakesCounter
                 )
         {
-            Debug.Log("7---H: P OR F; V: K");
+            //Debug.Log("7---H: P OR F; V: K");
 
             for (int i = 0; i < snakeNumber; i++)
             {
@@ -214,7 +214,7 @@ public class InitializeSceneScript : MonoBehaviour
         }
         else if (blueSnakesCounter == 0)
         {
-            Debug.Log("8---F P F S...");
+            //Debug.Log("8---F P F S...");
 
             winningActions[0] = "FEED";
             winningActions[1] = "PET";
@@ -227,7 +227,7 @@ public class InitializeSceneScript : MonoBehaviour
         }
         else if (pinkSnakesCounter == 3)
         {
-            Debug.Log("9---S pink F rest.");
+            //Debug.Log("9---S pink F rest.");
 
             for (int i = 0; i < snakeNumber; i++)
             {
@@ -243,7 +243,7 @@ public class InitializeSceneScript : MonoBehaviour
         }
         else
         {
-            Debug.Log("10---DLH DRH DLV DRH ULH URH ULV URV");
+            //Debug.Log("10---DLH DRH DLV DRH ULH URH ULV URV");
             /*                     
                 DLH: K        
                 DLV: S URH: S
@@ -326,7 +326,7 @@ public class InitializeSceneScript : MonoBehaviour
         // Q
         if (controls.Gameplay.Action1.triggered)
         {
-            Debug.Log("Q => KILL. This should have been a " + winningActions[selectedSnakeIndex]);
+            //Debug.Log("Q => KILL. This should have been a " + winningActions[selectedSnakeIndex]);
 
             if (winningActions[selectedSnakeIndex] == "KILL" || winningActions[selectedSnakeIndex] == "ANY") {
                 DisableSnake();
@@ -339,7 +339,7 @@ public class InitializeSceneScript : MonoBehaviour
         // E
         else if (controls.Gameplay.Action2.triggered)
         {
-            Debug.Log("E => PET. This should have been a " + winningActions[selectedSnakeIndex]);
+            //Debug.Log("E => PET. This should have been a " + winningActions[selectedSnakeIndex]);
 
             if (winningActions[selectedSnakeIndex] == "PET" || winningActions[selectedSnakeIndex] == "ANY" || winningActions[selectedSnakeIndex] == "FEEDPET")
             {
@@ -353,7 +353,7 @@ public class InitializeSceneScript : MonoBehaviour
         // R
         else if (controls.Gameplay.Action3.triggered)
         {
-            Debug.Log("R => SKIP. This should have been a " + winningActions[selectedSnakeIndex]);
+            //Debug.Log("R => SKIP. This should have been a " + winningActions[selectedSnakeIndex]);
 
             if (winningActions[selectedSnakeIndex] == "SKIP" || winningActions[selectedSnakeIndex] == "ANY")
             {
@@ -367,7 +367,7 @@ public class InitializeSceneScript : MonoBehaviour
         // F
         else if (controls.Gameplay.Action4.triggered)
         {
-            Debug.Log("F => FEED. This should have been a " + winningActions[selectedSnakeIndex]);
+           // Debug.Log("F => FEED. This should have been a " + winningActions[selectedSnakeIndex]);
             
             if (winningActions[selectedSnakeIndex] == "FEED" || winningActions[selectedSnakeIndex] == "ANY" || winningActions[selectedSnakeIndex] == "FEEDPET")
             {
