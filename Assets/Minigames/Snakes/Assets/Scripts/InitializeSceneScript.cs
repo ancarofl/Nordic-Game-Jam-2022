@@ -51,6 +51,8 @@ public class InitializeSceneScript : MonoBehaviour
     private string[] winningActions;
     private List<int> skipSnakes;
 
+    private int specialRuleWinCondition;
+
     void Awake()
     {
         //Debug.Log("Debug Snake - awake");
@@ -91,7 +93,7 @@ public class InitializeSceneScript : MonoBehaviour
              2. Red > each other colour? K all => WIN. TO DO: Do something regarding time.
              3. Green > each other colour? F P F P...
              4. Yellow > each other colour? P F P F...
-             5. 6 different colours?
+             5. 7 different colours? Atm max is 6 ;)
                     DLH: K
                     DLV: S
                     DRH: P
@@ -104,6 +106,7 @@ public class InitializeSceneScript : MonoBehaviour
             7. Dirty green > each other colour? horziontal: P OR F, vertical: K
             8. 0 blue? F P F -> S... => WIN
             9. 3 pink ? S pink, F rest
+            10. Repeats number 5.
         *
         *
         *
@@ -112,7 +115,7 @@ public class InitializeSceneScript : MonoBehaviour
 
         if (magentaSnakesCounter > greenSnakesCounter)
         {
-            Debug.Log("1---S 1/2 rounded up");
+            Debug.Log("1---S first 1/2 rounded up");
 
             /* TODO: Round up the division! */
             int firstHalf = snakeNumber / 2;
@@ -124,6 +127,8 @@ public class InitializeSceneScript : MonoBehaviour
             {
                 winningActions[i] = "EMPTY";
             }
+
+            specialRuleWinCondition = snakeNumber / 2;
         }
         else if (
                  redSnakesCounter > greenSnakesCounter && redSnakesCounter > blueSnakesCounter && redSnakesCounter > whiteSnakesCounter && 
@@ -180,7 +185,7 @@ public class InitializeSceneScript : MonoBehaviour
         }
         /* else if ()
         {
-            Debug.Log("5---WIP THIS ONE---DLH DRH DLV DRH ULH URH ULV URV");
+            Debug.Log("5---7 DIFF COLORS---ATM MAX IS 6---DLH DRH DLV DRH ULH URH ULV URV---WIP");
         } */
         else if (orangeSnakesCounter == 5)
         {
@@ -214,7 +219,7 @@ public class InitializeSceneScript : MonoBehaviour
             winningActions[1] = "PET";
             winningActions[2] = "FEED";
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 3; i < snakeNumber; i++)
             {
                winningActions[i] = "SKIP";
             }
@@ -269,7 +274,23 @@ public class InitializeSceneScript : MonoBehaviour
                 {
                     winningActions[i] = "KILL";
                 }
+                else if (snakes[i].transform.CompareTag("ULV"))
+                {
+                    if (i > 0)
+                    {
+                        winningActions[i] = winningActions[i - 1];
+                    } 
+                    else
+                    {
+                        winningActions[i] = "ANY";
+                    }
+                }
             }
+        }
+        /* Dev only. */
+        for (int i = 0; i < snakeNumber; i++)
+        {
+            Debug.Log("Snake " + i + " should be " + winningActions[i]);
         }
     }
 
@@ -277,6 +298,11 @@ public class InitializeSceneScript : MonoBehaviour
     void Start()
     {
        // Debug.Log("Debug Snake - start");
+    }
+
+    void LoseMinigame()
+    {
+        Debug.Log("YOU LOSE!");
     }
 
     // Update is called once per frame
@@ -301,28 +327,55 @@ public class InitializeSceneScript : MonoBehaviour
         {
             Debug.Log("Q => KILL. This should have been a " + winningActions[selectedSnakeIndex]);
 
-            DisableSnake();
+            if (winningActions[selectedSnakeIndex] == "KILL" || winningActions[selectedSnakeIndex] == "ANY") {
+                DisableSnake();
+            }
+            else
+            {
+                LoseMinigame();
+            }
         }
         // E
         else if (controls.Gameplay.Action2.triggered)
         {
             Debug.Log("E => PET. This should have been a " + winningActions[selectedSnakeIndex]);
 
-            DisableSnake();
+            if (winningActions[selectedSnakeIndex] == "PET" || winningActions[selectedSnakeIndex] == "ANY" || winningActions[selectedSnakeIndex] == "FEEDPET")
+            {
+                DisableSnake();
+            }
+            else
+            {
+                LoseMinigame();
+            }
         }
         // R
         else if (controls.Gameplay.Action3.triggered)
         {
             Debug.Log("R => SKIP. This should have been a " + winningActions[selectedSnakeIndex]);
 
-            DisableSnake();
+            if (winningActions[selectedSnakeIndex] == "SKIP" || winningActions[selectedSnakeIndex] == "ANY")
+            {
+                DisableSnake();
+            }
+            else
+            {
+                LoseMinigame();
+            }
         }
         // F
         else if (controls.Gameplay.Action4.triggered)
         {
             Debug.Log("F => FEED. This should have been a " + winningActions[selectedSnakeIndex]);
-
-            DisableSnake();
+            
+            if (winningActions[selectedSnakeIndex] == "FEED" || winningActions[selectedSnakeIndex] == "ANY" || winningActions[selectedSnakeIndex] == "FEEDPET")
+            {
+                DisableSnake();
+            }
+            else
+            {
+                LoseMinigame();
+            }
         }
 
     }
@@ -347,6 +400,10 @@ public class InitializeSceneScript : MonoBehaviour
     /* The player wins when all the snakes have been dealt with. */
     bool IsVictory()
     {
+        if (specialRuleWinCondition == skipSnakes.Count)
+        {
+            return true;
+        }
         return skipSnakes.Count == snakeNumber;
     }
 
