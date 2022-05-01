@@ -28,6 +28,8 @@ public class TimelineController : MonoBehaviour
     public minigameState cauldrenGameState = minigameState.open;
     public minigameState starGameState = minigameState.locked;
 
+    bool clickDisabled;
+
     void Awake()
     {
         Instance = this;
@@ -41,6 +43,12 @@ public class TimelineController : MonoBehaviour
     void LoadScene(string scenePath)
     {
         Debug.Log("About to load scene: " + scenePath);
+
+        if(ControlManager.Instance.Controls.Gameplay.Click.IsPressed())
+        {
+            ControlManager.Instance.Controls.Gameplay.Click.Disable();
+            clickDisabled = true;
+        }
 
         if (_currentScene != null)
             SceneManager.UnloadSceneAsync(_currentScene);
@@ -73,7 +81,11 @@ public class TimelineController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if(clickDisabled && ControlManager.Instance.Controls.Gameplay.UnClick.IsPressed())
+        {
+            ControlManager.Instance.Controls.Gameplay.Click.Enable();
+            clickDisabled = false;
+        }
     }
 
     public void PlaySnakes()

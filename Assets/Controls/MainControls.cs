@@ -98,6 +98,15 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UnClick"",
+                    ""type"": ""Button"",
+                    ""id"": ""436ab933-1d6e-49e1-a821-093ab6f605ab"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": ""Invert"",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -353,6 +362,39 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                     ""action"": ""Click"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ac895cff-5a4f-494a-95d3-11c1db451f6a"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UnClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9cbc7d2e-04dc-48cc-9ac0-2ca5700724b7"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UnClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""caf03bb7-7523-490b-9b3a-1e51893a0dc4"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UnClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -369,6 +411,7 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
         m_Gameplay_SelectLeft = m_Gameplay.FindAction("SelectLeft", throwIfNotFound: true);
         m_Gameplay_SelectRight = m_Gameplay.FindAction("SelectRight", throwIfNotFound: true);
         m_Gameplay_Click = m_Gameplay.FindAction("Click", throwIfNotFound: true);
+        m_Gameplay_UnClick = m_Gameplay.FindAction("UnClick", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -436,6 +479,7 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_SelectLeft;
     private readonly InputAction m_Gameplay_SelectRight;
     private readonly InputAction m_Gameplay_Click;
+    private readonly InputAction m_Gameplay_UnClick;
     public struct GameplayActions
     {
         private @MainControls m_Wrapper;
@@ -448,6 +492,7 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
         public InputAction @SelectLeft => m_Wrapper.m_Gameplay_SelectLeft;
         public InputAction @SelectRight => m_Wrapper.m_Gameplay_SelectRight;
         public InputAction @Click => m_Wrapper.m_Gameplay_Click;
+        public InputAction @UnClick => m_Wrapper.m_Gameplay_UnClick;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -481,6 +526,9 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                 @Click.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnClick;
                 @Click.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnClick;
                 @Click.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnClick;
+                @UnClick.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnUnClick;
+                @UnClick.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnUnClick;
+                @UnClick.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnUnClick;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -509,6 +557,9 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
                 @Click.started += instance.OnClick;
                 @Click.performed += instance.OnClick;
                 @Click.canceled += instance.OnClick;
+                @UnClick.started += instance.OnUnClick;
+                @UnClick.performed += instance.OnUnClick;
+                @UnClick.canceled += instance.OnUnClick;
             }
         }
     }
@@ -523,5 +574,6 @@ public partial class @MainControls : IInputActionCollection2, IDisposable
         void OnSelectLeft(InputAction.CallbackContext context);
         void OnSelectRight(InputAction.CallbackContext context);
         void OnClick(InputAction.CallbackContext context);
+        void OnUnClick(InputAction.CallbackContext context);
     }
 }
