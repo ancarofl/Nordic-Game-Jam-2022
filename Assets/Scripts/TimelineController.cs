@@ -55,7 +55,9 @@ public class TimelineController : MonoBehaviour
             }
 
             foreach (var scene in scenesToRemove)
+            {
                 SceneManager.UnloadSceneAsync(scene.path);
+            }
         }
 
         _currentScene = scenePath;
@@ -103,6 +105,13 @@ public class TimelineController : MonoBehaviour
 
     public void ReloadCurrentMinigame()
     {
+        for (int i = 0; i < SceneManager.sceneCount; i++)
+        {
+            var scene = SceneManager.GetSceneAt(i);
+            if (scene.name == "PreScene") continue;
+            _currentScene = scene.path;
+        }
+
         LoadScene(_currentScene);
     }
 
