@@ -29,6 +29,7 @@ public class InitializeSceneScript : MonoBehaviour
     public GameObject upRightVerticalSnakePrefab;
     public GameObject upRightVerticalSnakeGlowPrefab;
 
+    public GameObject background; 
 
     public int snakeNumber;
 
@@ -48,6 +49,11 @@ public class InitializeSceneScript : MonoBehaviour
     private int dirtyGreenSnakesCounter = 0;
     private int pinkSnakesCounter = 0;
 
+    private string[] winningActions;
+    private List<int> skipSnakes;
+
+    private int specialRuleWinCondition;
+
     void Awake()
     {
         //Debug.Log("Debug Snake - awake");
@@ -56,6 +62,8 @@ public class InitializeSceneScript : MonoBehaviour
         ControlManager.Instance.HideCursor();
 
         snakes = new GameObject[Mathf.Max(snakeNumber, 6)];
+        winningActions = new string[Mathf.Max(snakeNumber, 6)];
+        skipSnakes = new List<int>();
         GenerateSnakes();
         DetermineWinningActionsForSnakeConfiguration(); /* TODO: Rename? */
     }
@@ -86,7 +94,7 @@ public class InitializeSceneScript : MonoBehaviour
              2. Red > each other colour? K all => WIN. TO DO: Do something regarding time.
              3. Green > each other colour? F P F P...
              4. Yellow > each other colour? P F P F...
-             5. 6 different colours?
+             5. 7 different colours? Atm max is 6 ;)
                     DLH: K
                     DLV: S
                     DRH: P
@@ -95,18 +103,33 @@ public class InitializeSceneScript : MonoBehaviour
                     ULV: do same action as previous action
                     URH: S
                     URV: F OR K OR P OR S
-	        6. 5 orange => LOSE   
+	        6. 5 orange => LOSE ON EITHER ACTION
             7. Dirty green > each other colour? horziontal: P OR F, vertical: K
             8. 0 blue? F P F -> S... => WIN
             9. 3 pink ? S pink, F rest
+            10. Repeats number 5.
         *
         *
         *
         */
 
+
         if (magentaSnakesCounter > greenSnakesCounter)
         {
-            Debug.Log("1---S 1/2 rounded up.");
+            Debug.Log("1---S first 1/2 rounded up");
+
+            /* TODO: Round up the division! */
+            int firstHalf = snakeNumber / 2;
+            for (int i = 0; i < firstHalf; i++)
+            {
+                winningActions[i] = "SKIP";
+            }
+            for (int i = firstHalf; i < snakeNumber; i++)
+            {
+                winningActions[i] = "EMPTY";
+            }
+
+            specialRuleWinCondition = snakeNumber / 2;
         }
         else if (
                  redSnakesCounter > greenSnakesCounter && redSnakesCounter > blueSnakesCounter && redSnakesCounter > whiteSnakesCounter && 
@@ -115,6 +138,11 @@ public class InitializeSceneScript : MonoBehaviour
                 )
         {
             Debug.Log("2---K ALL.");
+
+            for (int i = 0; i < snakeNumber; i++)
+            {
+                winningActions[i] = "KILL";
+            }
         }
         else if (
                  greenSnakesCounter > redSnakesCounter && greenSnakesCounter > blueSnakesCounter && greenSnakesCounter > whiteSnakesCounter &&
@@ -123,6 +151,18 @@ public class InitializeSceneScript : MonoBehaviour
                 )
         {
             Debug.Log("3---F P F P...");
+
+            for (int i = 0; i < snakeNumber; i++)
+            {
+                if ( i % 2 == 0 )
+                {
+                    winningActions[i] = "FEED";
+                }
+                else
+                {
+                    winningActions[i] = "PET";
+                }
+            }
         }
         else if (
                  yellowSnakesCounter > redSnakesCounter && yellowSnakesCounter > blueSnakesCounter && yellowSnakesCounter > whiteSnakesCounter &&
@@ -130,15 +170,27 @@ public class InitializeSceneScript : MonoBehaviour
                  yellowSnakesCounter > dirtyGreenSnakesCounter && yellowSnakesCounter > pinkSnakesCounter
                 )
         {
-            Debug.Log("4---F P F P...");
+            Debug.Log("4---P F P F...");
+
+            for (int i = 0; i < snakeNumber; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    winningActions[i] = "PET";
+                }
+                else
+                {
+                    winningActions[i] = "FEED";
+                }
+            }
         }
         /* else if ()
         {
-            Debug.Log("5---WIP THIS ONE---DLH DRH DLV DRH ULH URH ULV URV");
+            Debug.Log("5---7 DIFF COLORS---ATM MAX IS 6---DLH DRH DLV DRH ULH URH ULV URV---WIP");
         } */
         else if (orangeSnakesCounter == 5)
         {
-            Debug.Log("6---LOSS");
+            Debug.Log("6---LOSS AS SOON AS ANY ACTION IS TAKEN");
         }
         else if (
                  dirtyGreenSnakesCounter > redSnakesCounter && dirtyGreenSnakesCounter > blueSnakesCounter && dirtyGreenSnakesCounter > whiteSnakesCounter &&
@@ -147,18 +199,99 @@ public class InitializeSceneScript : MonoBehaviour
                 )
         {
             Debug.Log("7---H: P OR F; V: K");
+
+            for (int i = 0; i < snakeNumber; i++)
+            {
+                if (snakes[i].transform.CompareTag("DLV") || snakes[i].transform.CompareTag("DRV") || snakes[i].transform.CompareTag("ULV") || snakes[i].transform.CompareTag("URV"))
+                {
+                    winningActions[i] = "KILL";
+                }
+                else
+                {
+                    winningActions[i] = "FEEDPET";
+                }
+            }
         }
         else if (blueSnakesCounter == 0)
         {
             Debug.Log("8---F P F S...");
+
+            winningActions[0] = "FEED";
+            winningActions[1] = "PET";
+            winningActions[2] = "FEED";
+
+            for (int i = 3; i < snakeNumber; i++)
+            {
+               winningActions[i] = "SKIP";
+            }
         }
         else if (pinkSnakesCounter == 3)
         {
             Debug.Log("9---S pink F rest.");
+
+            for (int i = 0; i < snakeNumber; i++)
+            {
+                if (snakes[i].transform.GetComponent<SpriteRenderer>().color == new Color(240 / 255f, 218 / 255f, 245 / 255f))
+                {
+                    winningActions[i] = "SKIP";
+                }
+                else
+                {
+                    winningActions[i] = "FEED";
+                }
+            }
         }
         else
         {
             Debug.Log("10---DLH DRH DLV DRH ULH URH ULV URV");
+            /*                     
+                DLH: K        
+                DLV: S URH: S
+                DRH: P ULH: P
+                DRV: F
+                URV: F OR K OR P OR S
+
+                ULV: do same action as previous action
+            */
+            for (int i = 0; i < snakeNumber; i++)
+            {
+                if (snakes[i].transform.CompareTag("DLV") || snakes[i].transform.CompareTag("URH"))
+                {
+                    winningActions[i] = "SKIP";
+                }
+                else if (snakes[i].transform.CompareTag("DRH") || snakes[i].transform.CompareTag("ULH"))
+                {
+                    winningActions[i] = "PET";
+                }
+                else if (snakes[i].transform.CompareTag("URV"))
+                {
+                    winningActions[i] = "ANY";
+                }
+                else if (snakes[i].transform.CompareTag("DRV"))
+                {
+                    winningActions[i] = "FEED";
+                }
+                else if (snakes[i].transform.CompareTag("DLH"))
+                {
+                    winningActions[i] = "KILL";
+                }
+                else if (snakes[i].transform.CompareTag("ULV"))
+                {
+                    if (i > 0)
+                    {
+                        winningActions[i] = winningActions[i - 1];
+                    } 
+                    else
+                    {
+                        winningActions[i] = "ANY";
+                    }
+                }
+            }
+        }
+        /* Dev only. */
+        for (int i = 0; i < snakeNumber; i++)
+        {
+            Debug.Log("Snake " + i + " should be " + winningActions[i]);
         }
     }
 
@@ -166,6 +299,11 @@ public class InitializeSceneScript : MonoBehaviour
     void Start()
     {
        // Debug.Log("Debug Snake - start");
+    }
+
+    void LoseMinigame()
+    {
+        Debug.Log("YOU LOSE!");
     }
 
     // Update is called once per frame
@@ -188,49 +326,177 @@ public class InitializeSceneScript : MonoBehaviour
         // Q
         if (controls.Gameplay.Action1.triggered)
         {
-            //Debug.Log("Q => Kill");
+            Debug.Log("Q => KILL. This should have been a " + winningActions[selectedSnakeIndex]);
+
+            if (winningActions[selectedSnakeIndex] == "KILL" || winningActions[selectedSnakeIndex] == "ANY") {
+                DisableSnake();
+            }
+            else
+            {
+                LoseMinigame();
+            }
         }
         // E
         else if (controls.Gameplay.Action2.triggered)
         {
-            //Debug.Log("E => Pat");
+            Debug.Log("E => PET. This should have been a " + winningActions[selectedSnakeIndex]);
+
+            if (winningActions[selectedSnakeIndex] == "PET" || winningActions[selectedSnakeIndex] == "ANY" || winningActions[selectedSnakeIndex] == "FEEDPET")
+            {
+                DisableSnake();
+            }
+            else
+            {
+                LoseMinigame();
+            }
         }
-        // F. Change this to Action3 (R) in case the other minigames only use 3 buttons.
+        // R
+        else if (controls.Gameplay.Action3.triggered)
+        {
+            Debug.Log("R => SKIP. This should have been a " + winningActions[selectedSnakeIndex]);
+
+            if (winningActions[selectedSnakeIndex] == "SKIP" || winningActions[selectedSnakeIndex] == "ANY")
+            {
+                DisableSnake();
+            }
+            else
+            {
+                LoseMinigame();
+            }
+        }
+        // F
         else if (controls.Gameplay.Action4.triggered)
         {
-           // Debug.Log("F => Feed");
+            Debug.Log("F => FEED. This should have been a " + winningActions[selectedSnakeIndex]);
+            
+            if (winningActions[selectedSnakeIndex] == "FEED" || winningActions[selectedSnakeIndex] == "ANY" || winningActions[selectedSnakeIndex] == "FEEDPET")
+            {
+                DisableSnake();
+            }
+            else
+            {
+                LoseMinigame();
+            }
+        }
+
+    }
+
+    void WinMinigame()
+    {
+        FeedbackManager.Instance.FinishedMiniGameGood();
+    }
+
+    void DisableSnake()
+    {
+        selectedSnake.SetActive(false);
+        skipSnakes.Add(selectedSnakeIndex);
+
+        // TODO: If the player won, cleanup(?) and call FinishedMiniGameGood(). 
+        if (IsVictory())
+        {
+            WinMinigame();
+        }
+        // Otherwise advance to the next snake.
+        else
+        {
+            SelectNextSnake();
         }
     }
 
+    /* The player wins when all the snakes have been dealt with. */
+    bool IsVictory()
+    {
+        if (specialRuleWinCondition == skipSnakes.Count)
+        {
+            return true;
+        }
+        return skipSnakes.Count == snakeNumber;
+    }
+
+    /* TODO: Improve code. */
     void SelectPreviousSnake()
     {
-        // If not first element of the array: index = previous index
+        // If not last element of the array: index = next index
         if (selectedSnakeIndex > 0)
         {
-            selectedSnakeIndex--;
+            int tempNextIndex = selectedSnakeIndex - 1;
+
+            while (skipSnakes.Contains(tempNextIndex))
+            {
+                if (tempNextIndex > 0)
+                {
+                    tempNextIndex--;
+                }
+                else
+                {
+                    tempNextIndex = snakeNumber - 1;
+                }
+            }
+            selectedSnakeIndex = tempNextIndex;
         }
         // Otherwise: index = last index
         else
         {
-            selectedSnakeIndex = snakeNumber - 1;
+            int tempNextIndex = snakeNumber - 1;
+
+            while (skipSnakes.Contains(tempNextIndex))
+            {
+                if (tempNextIndex > 0)
+                {
+                    tempNextIndex--;
+                }
+                else
+                {
+                    tempNextIndex = snakeNumber - 1;
+                }
+            }
+            selectedSnakeIndex = tempNextIndex;
         }
+
         selectedSnake = snakes[selectedSnakeIndex];
         OutlineSnake();
     }
 
 
-
+    /* TODO: I like spaghetti but improve this code anyway. */
     void SelectNextSnake()
     {
         // If not last element of the array: index = next index
         if (selectedSnakeIndex < snakeNumber - 1)
         {
-            selectedSnakeIndex++;
+
+            int tempNextIndex = selectedSnakeIndex + 1;
+
+            while (skipSnakes.Contains(tempNextIndex))
+            {
+                if (tempNextIndex < snakeNumber - 1)
+                {
+                    tempNextIndex++;
+                }
+                else
+                {
+                    tempNextIndex = 0;
+                }
+            }
+            selectedSnakeIndex = tempNextIndex;
         }
         // Otherwise: index = first index
         else
         {
-            selectedSnakeIndex = 0;
+            int tempNextIndex = 0;
+
+            while (skipSnakes.Contains(tempNextIndex))
+            {
+                if (tempNextIndex < snakeNumber - 1)
+                {
+                    tempNextIndex++;
+                }
+                else
+                {
+                    tempNextIndex = 0;
+                }
+            }
+            selectedSnakeIndex = tempNextIndex;
         }
         selectedSnake = snakes[selectedSnakeIndex];
         OutlineSnake();
@@ -244,49 +510,50 @@ public class InitializeSceneScript : MonoBehaviour
         if (selectedSnake.transform.CompareTag("DLH"))
         {
             //Debug.Log("DLH");
-            selectedSnakeGlow = Instantiate(downLeftHorizontalSnakeGlowPrefab);
+            /* TODO: Find a better way to instantiate a prefab in a specific scene. */
+            selectedSnakeGlow = Instantiate(downLeftHorizontalSnakeGlowPrefab, background.transform);
             selectedSnakeGlow.transform.position = new Vector2(selectedSnake.transform.position.x + 0.05f, selectedSnake.transform.position.y - 0.001f);
         }
         else if (selectedSnake.transform.CompareTag("DLV"))
         {
             //Debug.Log("DLV");
-            selectedSnakeGlow = Instantiate(downLeftVerticalSnakeGlowPrefab);
+            selectedSnakeGlow = Instantiate(downLeftVerticalSnakeGlowPrefab, background.transform);
             selectedSnakeGlow.transform.position = new Vector2(selectedSnake.transform.position.x - 0.01f, selectedSnake.transform.position.y - 0.026f); ;
         }
         else if (selectedSnake.transform.CompareTag("DRH"))
         {
             //Debug.Log("DRH");
-            selectedSnakeGlow = Instantiate(downRightHorizontalSnakeGlowPrefab);
+            selectedSnakeGlow = Instantiate(downRightHorizontalSnakeGlowPrefab, background.transform);
             selectedSnakeGlow.transform.position = new Vector2(selectedSnake.transform.position.x + 2.729289f, selectedSnake.transform.position.y + 0.2612587f);
         }
         else if (selectedSnake.transform.CompareTag("DRV"))
         {
             //Debug.Log("DRV");
-            selectedSnakeGlow = Instantiate(downRightVerticalSnakeGlowPrefab);
+            selectedSnakeGlow = Instantiate(downRightVerticalSnakeGlowPrefab, background.transform);
             selectedSnakeGlow.transform.position = new Vector2(selectedSnake.transform.position.x + 0.037f, selectedSnake.transform.position.y - 0.018f);
         }
         else if (selectedSnake.transform.CompareTag("ULH"))
         {
             //Debug.Log("ULH");
-            selectedSnakeGlow = Instantiate(upLeftHorizontalSnakeGlowPrefab);
+            selectedSnakeGlow = Instantiate(upLeftHorizontalSnakeGlowPrefab, background.transform);
             selectedSnakeGlow.transform.position = new Vector2(selectedSnake.transform.position.x + 0.05f, selectedSnake.transform.position.y - 0.01f);
         }
         else if (selectedSnake.transform.CompareTag("ULV"))
         {
             //Debug.Log("ULV");
-            selectedSnakeGlow = Instantiate(upLeftVerticalSnakeGlowPrefab);
+            selectedSnakeGlow = Instantiate(upLeftVerticalSnakeGlowPrefab, background.transform);
             selectedSnakeGlow.transform.position = new Vector2(selectedSnake.transform.position.x - 0.01f, selectedSnake.transform.position.y + 0.037f);
         }
         else if (selectedSnake.transform.CompareTag("URH"))
         {
             //Debug.Log("URH");
-            selectedSnakeGlow = Instantiate(upRightHorizontalSnakeGlowPrefab);
+            selectedSnakeGlow = Instantiate(upRightHorizontalSnakeGlowPrefab, background.transform);
             selectedSnakeGlow.transform.position = new Vector2(selectedSnake.transform.position.x + 2.785f, selectedSnake.transform.position.y - 0.15f);
         }
         else if (selectedSnake.transform.CompareTag("URV"))
         {
             //Debug.Log("URV");
-            selectedSnakeGlow = Instantiate(upRightHorizontalSnakeGlowPrefab);
+            selectedSnakeGlow = Instantiate(upRightHorizontalSnakeGlowPrefab, background.transform);
             selectedSnakeGlow.transform.position = new Vector2(selectedSnake.transform.position.x - 0.01f, selectedSnake.transform.position.y + 0.037f);
         }
         selectedSnakeGlow.GetComponent<SpriteRenderer>().color = Color.cyan;

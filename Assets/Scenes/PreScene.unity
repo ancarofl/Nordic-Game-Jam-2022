@@ -220,7 +220,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxTime: 180
   _timerImage: {fileID: 690090453}
-  started: 0
 --- !u!1 &690090450
 GameObject:
   m_ObjectHideFlags: 0
@@ -722,7 +721,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 637ed82f75646334e86ce9b7614a1aa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _disableInEditor: 1
+  _disableIntroInEditor: 1
   timer: {fileID: 438938500}
   introScenePath: Assets/Scenes/Intro.unity
   roomScenePath: Assets/Scenes/Room.unity
@@ -731,9 +730,9 @@ MonoBehaviour:
   starsScenePath: 
   EndBadScenePath: Assets/Scenes/End bad.unity
   EndGoodScenePath: Assets/Scenes/End good.unity
-  snakeGameEnabled: 1
-  cauldrenGameEnabled: 1
-  starGameEnabled: 1
+  snakeGameState: 1
+  cauldrenGameState: 1
+  starGameState: 0
 --- !u!1 &2106641893
 GameObject:
   m_ObjectHideFlags: 0
