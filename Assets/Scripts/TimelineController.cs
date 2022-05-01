@@ -8,7 +8,7 @@ public class TimelineController : MonoBehaviour
     public static TimelineController Instance { get; private set; }
 
     string _currentScene = null;
-    [SerializeField] bool _disableInEditor = true;
+    [SerializeField] bool _disableIntroInEditor = true;
 
     public Timer timer;
 
@@ -31,20 +31,32 @@ public class TimelineController : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        LoadScene(introScenePath);
-        if (!_disableInEditor)
+        if (!_disableIntroInEditor && Application.isEditor)
+        {
+            LoadScene(introScenePath);
             timer.gameObject.SetActive(false);
+        }
     }
 
     void LoadScene(string scenePath)
     {
         Debug.Log("About to load scene: " + scenePath);
 
-        if (_disableInEditor && Application.isEditor)
-            return;
-
         if (_currentScene != null)
             SceneManager.UnloadSceneAsync(_currentScene);
+        else
+        {
+            List<Scene> scenesToRemove = new List<Scene>();
+            for (int i = 0; i < SceneManager.sceneCount; i++)
+            {
+                var scene = SceneManager.GetSceneAt(i);
+                if (scene.name == "PreScene") continue;
+                scenesToRemove.Add(scene);
+            }
+
+            foreach (var scene in scenesToRemove)
+                SceneManager.UnloadSceneAsync(scene.path);
+        }
 
         _currentScene = scenePath;
         SceneManager.LoadScene(_currentScene, LoadSceneMode.Additive);
@@ -75,6 +87,7 @@ public class TimelineController : MonoBehaviour
 
     public void EndSceneFinished()
     {
+        _disableIntroInEditor = false;
         SceneManager.LoadScene(0);
     }
 
