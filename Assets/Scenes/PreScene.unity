@@ -730,7 +730,7 @@ MonoBehaviour:
   starsScenePath: 
   EndBadScenePath: Assets/Scenes/End bad.unity
   EndGoodScenePath: Assets/Scenes/End good.unity
-  snakeGameState: 1
+  snakeGameState: 0
   cauldrenGameState: 1
   starGameState: 0
 --- !u!1 &2106641893
