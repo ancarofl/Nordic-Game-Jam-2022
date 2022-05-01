@@ -482,7 +482,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.4764151, b: 0.7137881, a: 1}
+  m_Color: {r: 0.35978103, g: 0.7422954, b: 0.990566, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1294,7 +1294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 637ed82f75646334e86ce9b7614a1aa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _disableIntroInEditor: 0
+  _disableIntroInEditor: 1
   timer: {fileID: 438938500}
   introScenePath: Assets/Scenes/Intro.unity
   roomScenePath: Assets/Scenes/Room.unity
