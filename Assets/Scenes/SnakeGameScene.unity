@@ -236,6 +236,7 @@ MonoBehaviour:
   upRightHorizontalSnakeGlowPrefab: {fileID: 8859012589446428195, guid: 5ffd14585117c8a4986100ffab9a422c, type: 3}
   upRightVerticalSnakePrefab: {fileID: 2061933473352179957, guid: e3830cb1f3df78e469d8583fd91f3289, type: 3}
   upRightVerticalSnakeGlowPrefab: {fileID: 206916207844083579, guid: 649ba3289258cf741b5d6ee275781c7a, type: 3}
+  background: {fileID: 1324742521}
   snakeNumber: 6
 --- !u!1 &1622304887
 GameObject:

@@ -29,6 +29,7 @@ public class InitializeSceneScript : MonoBehaviour
     public GameObject upRightVerticalSnakePrefab;
     public GameObject upRightVerticalSnakeGlowPrefab;
 
+    public GameObject background; 
 
     public int snakeNumber;
 
@@ -509,49 +510,50 @@ public class InitializeSceneScript : MonoBehaviour
         if (selectedSnake.transform.CompareTag("DLH"))
         {
             //Debug.Log("DLH");
-            selectedSnakeGlow = Instantiate(downLeftHorizontalSnakeGlowPrefab);
+            /* TODO: Find a better way to instantiate a prefab in a specific scene. */
+            selectedSnakeGlow = Instantiate(downLeftHorizontalSnakeGlowPrefab, background.transform);
             selectedSnakeGlow.transform.position = new Vector2(selectedSnake.transform.position.x + 0.05f, selectedSnake.transform.position.y - 0.001f);
         }
         else if (selectedSnake.transform.CompareTag("DLV"))
         {
             //Debug.Log("DLV");
-            selectedSnakeGlow = Instantiate(downLeftVerticalSnakeGlowPrefab);
+            selectedSnakeGlow = Instantiate(downLeftVerticalSnakeGlowPrefab, background.transform);
             selectedSnakeGlow.transform.position = new Vector2(selectedSnake.transform.position.x - 0.01f, selectedSnake.transform.position.y - 0.026f); ;
         }
         else if (selectedSnake.transform.CompareTag("DRH"))
         {
             //Debug.Log("DRH");
-            selectedSnakeGlow = Instantiate(downRightHorizontalSnakeGlowPrefab);
+            selectedSnakeGlow = Instantiate(downRightHorizontalSnakeGlowPrefab, background.transform);
             selectedSnakeGlow.transform.position = new Vector2(selectedSnake.transform.position.x + 2.729289f, selectedSnake.transform.position.y + 0.2612587f);
         }
         else if (selectedSnake.transform.CompareTag("DRV"))
         {
             //Debug.Log("DRV");
-            selectedSnakeGlow = Instantiate(downRightVerticalSnakeGlowPrefab);
+            selectedSnakeGlow = Instantiate(downRightVerticalSnakeGlowPrefab, background.transform);
             selectedSnakeGlow.transform.position = new Vector2(selectedSnake.transform.position.x + 0.037f, selectedSnake.transform.position.y - 0.018f);
         }
         else if (selectedSnake.transform.CompareTag("ULH"))
         {
             //Debug.Log("ULH");
-            selectedSnakeGlow = Instantiate(upLeftHorizontalSnakeGlowPrefab);
+            selectedSnakeGlow = Instantiate(upLeftHorizontalSnakeGlowPrefab, background.transform);
             selectedSnakeGlow.transform.position = new Vector2(selectedSnake.transform.position.x + 0.05f, selectedSnake.transform.position.y - 0.01f);
         }
         else if (selectedSnake.transform.CompareTag("ULV"))
         {
             //Debug.Log("ULV");
-            selectedSnakeGlow = Instantiate(upLeftVerticalSnakeGlowPrefab);
+            selectedSnakeGlow = Instantiate(upLeftVerticalSnakeGlowPrefab, background.transform);
             selectedSnakeGlow.transform.position = new Vector2(selectedSnake.transform.position.x - 0.01f, selectedSnake.transform.position.y + 0.037f);
         }
         else if (selectedSnake.transform.CompareTag("URH"))
         {
             //Debug.Log("URH");
-            selectedSnakeGlow = Instantiate(upRightHorizontalSnakeGlowPrefab);
+            selectedSnakeGlow = Instantiate(upRightHorizontalSnakeGlowPrefab, background.transform);
             selectedSnakeGlow.transform.position = new Vector2(selectedSnake.transform.position.x + 2.785f, selectedSnake.transform.position.y - 0.15f);
         }
         else if (selectedSnake.transform.CompareTag("URV"))
         {
             //Debug.Log("URV");
-            selectedSnakeGlow = Instantiate(upRightHorizontalSnakeGlowPrefab);
+            selectedSnakeGlow = Instantiate(upRightHorizontalSnakeGlowPrefab, background.transform);
             selectedSnakeGlow.transform.position = new Vector2(selectedSnake.transform.position.x - 0.01f, selectedSnake.transform.position.y + 0.037f);
         }
         selectedSnakeGlow.GetComponent<SpriteRenderer>().color = Color.cyan;
