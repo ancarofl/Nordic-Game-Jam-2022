@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 using UnityEngine.SceneManagement;
 
 public class IntroScene : MonoBehaviour
@@ -10,6 +11,12 @@ public class IntroScene : MonoBehaviour
     void Start()
     {
         ControlManager.Instance.HideCursor();
+        MusicManager.Instance.BassVolume = 0f;
+        MusicManager.Instance.PianoVolume = 0f;
+        MusicManager.Instance.DrumVolume = 0f;
+        MusicManager.Instance.ShakerVolume = 0f;
+
+        DOTween.To(() => MusicManager.Instance.PianoVolume, (x) => MusicManager.Instance.PianoVolume = x, 1f, 3f).SetEase(Ease.InQuad);
     }
 
     // Update is called once per frame
