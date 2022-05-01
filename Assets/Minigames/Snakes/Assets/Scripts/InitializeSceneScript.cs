@@ -301,7 +301,7 @@ public class InitializeSceneScript : MonoBehaviour
        // Debug.Log("Debug Snake - start");
     }
 
-    void LoseMinigame()
+    void DidWrongAction()
     {
         FeedbackManager.Instance.DidBad();
     }
@@ -333,7 +333,7 @@ public class InitializeSceneScript : MonoBehaviour
             }
             else
             {
-                LoseMinigame();
+                DidWrongAction();
             }
         }
         // E
@@ -347,7 +347,7 @@ public class InitializeSceneScript : MonoBehaviour
             }
             else
             {
-                LoseMinigame();
+                DidWrongAction();
             }
         }
         // R
@@ -361,7 +361,7 @@ public class InitializeSceneScript : MonoBehaviour
             }
             else
             {
-                LoseMinigame();
+                DidWrongAction();
             }
         }
         // F
@@ -375,7 +375,7 @@ public class InitializeSceneScript : MonoBehaviour
             }
             else
             {
-                LoseMinigame();
+                DidWrongAction();
             }
         }
 
