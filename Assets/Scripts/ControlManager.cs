@@ -48,6 +48,11 @@ public class ControlManager : MonoBehaviour
         IsCursorVisible = false;
     }
 
+    public void MoveCursorToWorldSpace(Vector2 ScreenPos)
+    {
+        _cursor.transform.position = ScreenPos;
+    }
+
     void LateUpdate()
     {
         if (IsCursorVisible && Camera.main)
