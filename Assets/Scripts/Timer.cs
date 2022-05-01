@@ -36,7 +36,9 @@ public class Timer : MonoBehaviour
         if (timeLeft <= 0)
         {
             TimelineController.Instance.TimeRanOut();
+            Destroy(gameObject);
         }
         _timerImage.fillAmount = timeLeft / maxTime;
+
     }
 }
