@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4353116845573212207}
   m_Layer: 0
   m_Name: ULVGlow
-  m_TagString: DLV
+  m_TagString: ULV
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
