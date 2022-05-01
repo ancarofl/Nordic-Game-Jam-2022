@@ -8,6 +8,8 @@ public class StarGrid : MonoBehaviour
 {
     [SerializeField]
     private GameObject starPrefab;
+    [SerializeField]
+    private Transform cursorStartTransform;
 
     private int xStarAmount = 11;
     private int yStarAmount = 11;
@@ -15,6 +17,7 @@ public class StarGrid : MonoBehaviour
     private Star[,] stars;
     private float starScale = 2;
     private bool started = false;
+    private bool ded = false;
 
     private List<(int x,int y)> orderedCoordinates = new List<(int x, int y)>()
         {
@@ -74,7 +77,8 @@ public class StarGrid : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ControlManager.Instance.MoveCursorToScreenSpace(new Vector2(0.1f, 0.1f));
+        started = false;
+        ded = false;
         stars = new Star[xStarAmount,yStarAmount];
         for(int x = 0; x < xStarAmount; x++)
         {
@@ -94,10 +98,12 @@ public class StarGrid : MonoBehaviour
 
     void Update()
     {
-        if(started && !ControlManager.Instance.Controls.Gameplay.Click.IsPressed()) 
+        if(started && !ControlManager.Instance.Controls.Gameplay.Click.IsPressed() && !ded) 
         {
             started = false;
             FeedbackManager.Instance.DidBad();
+            TimelineController.Instance.ReloadCurrentMinigame();
+            ded = true;
         }
     }
     public void CheckSelection((int x, int y) coords)
@@ -120,9 +126,13 @@ public class StarGrid : MonoBehaviour
             }
             else
             {
-                Debug.Log("OOF" + coords.x + "   " + coords.y);
-                FeedbackManager.Instance.DidBad();
-                TimelineController.Instance.ReloadCurrentMinigame();
+                if (!ded)
+                {
+                    Debug.Log("OOF" + coords.x + "   " + coords.y);
+                    FeedbackManager.Instance.DidBad();
+                    TimelineController.Instance.ReloadCurrentMinigame();
+                    ded = true;
+                }
             }
         }
     }
