@@ -8,11 +8,13 @@ public class MinigameInteractable : MonoBehaviour
     SpriteRenderer _sprite;
 
     bool _highlighted;
-    bool _disabled = false;
 
     public enum minigame { snakes, cauldren, stars }
     public minigame minigameToPlay;
 
+    public Sprite spriteWhenDone;
+
+    TimelineController.minigameState state = TimelineController.minigameState.open;
 
     // Start is called before the first frame update
     void Start()
@@ -22,47 +24,54 @@ public class MinigameInteractable : MonoBehaviour
         switch (minigameToPlay)
         {
             case minigame.snakes:
-                if (!TimelineController.Instance.snakeGameEnabled) Disable();
+                state = TimelineController.Instance.snakeGameState;
                 break;
             case minigame.cauldren:
-                if (!TimelineController.Instance.cauldrenGameEnabled) Disable();
+                state = TimelineController.Instance.cauldrenGameState;
                 break;
             case minigame.stars:
-                if (!TimelineController.Instance.starGameEnabled) Disable();
+                state = TimelineController.Instance.starGameState;
                 break;
         }
 
-        void Disable()
+        if (state == TimelineController.minigameState.completed)
         {
-            _sprite.color = Color.grey;
-            _disabled = true;
+            _sprite.color = Color.white;
+            _sprite.sprite = spriteWhenDone;
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_disabled)
+        if (state == TimelineController.minigameState.completed)
             return;
 
         if (_highlighted && ControlManager.Instance.Controls.Gameplay.Action1.triggered)
         {
-            switch (minigameToPlay)
+            if (state == TimelineController.minigameState.open)
             {
-                case minigame.snakes:
-                    TimelineController.Instance.PlaySnakes();
-                    break;
-                case minigame.cauldren:
-                    break;
-                case minigame.stars:
-                    break;
+                switch (minigameToPlay)
+                {
+                    case minigame.snakes:
+                        TimelineController.Instance.PlaySnakes();
+                        break;
+                    case minigame.cauldren:
+                        break;
+                    case minigame.stars:
+                        break;
+                }
+            }
+            else if (state == TimelineController.minigameState.locked)
+            {
+                FeedbackManager.Instance.DidBad();
             }
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (_disabled)
+        if (state == TimelineController.minigameState.completed)
             return;
 
         if (collision.gameObject.tag == "Player")
@@ -74,7 +83,7 @@ public class MinigameInteractable : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (_disabled)
+        if (state == TimelineController.minigameState.completed)
             return;
 
         if (collision.gameObject.tag == "Player")
