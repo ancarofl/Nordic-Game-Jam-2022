@@ -15,12 +15,13 @@ public class Timer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     public void AddTime(float time)
     {
         timeLeft += time;
+        timeLeft = Mathf.Clamp(timeLeft, 0, maxTime);
     }
 
     public void RemoveTime(float time)
@@ -44,7 +45,7 @@ public class Timer : MonoBehaviour
         _timerImage.fillAmount = timeLeft / maxTime;
 
         clockTimer -= Time.deltaTime;
-        if(clockTimer <= 0f && timeLeft / maxTime <= 0.25f)
+        if (clockTimer <= 0f && timeLeft / maxTime <= 0.25f)
         {
             clockTimer = 1f;
             transform.DOComplete();

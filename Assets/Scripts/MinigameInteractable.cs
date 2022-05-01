@@ -58,8 +58,10 @@ public class MinigameInteractable : MonoBehaviour
                         TimelineController.Instance.PlaySnakes();
                         break;
                     case minigame.cauldren:
+                        TimelineController.Instance.PlayCauldren();
                         break;
                     case minigame.stars:
+                        TimelineController.Instance.PlayStars();
                         break;
                 }
             }

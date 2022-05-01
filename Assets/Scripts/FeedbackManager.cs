@@ -29,7 +29,7 @@ public class FeedbackManager : MonoBehaviour
 
     public void FinishedMiniGameGood()
     {
-        timer.AddTime(2f*60f);
+        timer.AddTime(1f*60f);
         TimelineController.Instance.ReturnFromMinigame();
     }
 

@@ -92,6 +92,15 @@ public class TimelineController : MonoBehaviour
     {
         LoadScene(snakeScenePath);
     }
+    public void PlayCauldren()
+    {
+        LoadScene(cauldrenScenePath);
+    }
+
+    public void PlayStars()
+    {
+        LoadScene(starsScenePath);
+    }
 
     public void IntroFinished()
     {

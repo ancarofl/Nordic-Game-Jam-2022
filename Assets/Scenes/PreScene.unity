@@ -133,7 +133,6 @@ GameObject:
   m_Component:
   - component: {fileID: 146951099}
   - component: {fileID: 146951100}
-  - component: {fileID: 146951101}
   m_Layer: 0
   m_Name: MusicManager
   m_TagString: Untagged
@@ -176,14 +175,6 @@ MonoBehaviour:
   _drumSource: {fileID: 1207163010}
   _pianoSource: {fileID: 1373683091}
   _shakerSource: {fileID: 1546352017}
---- !u!81 &146951101
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 146951098}
-  m_Enabled: 1
 --- !u!1 &151088225
 GameObject:
   m_ObjectHideFlags: 0
@@ -281,6 +272,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxTime: 180
   _timerImage: {fileID: 690090453}
+  clockTimer: 0
 --- !u!1 &640419813
 GameObject:
   m_ObjectHideFlags: 0
@@ -1299,7 +1291,7 @@ MonoBehaviour:
   introScenePath: Assets/Scenes/Intro.unity
   roomScenePath: Assets/Scenes/Room.unity
   snakeScenePath: Assets/Scenes/SnakeGameScene.unity
-  cauldrenScenePath: 
+  cauldrenScenePath: Assets/Minigames/Cauldron/CauldronMinigame.unity
   starsScenePath: 
   EndBadScenePath: Assets/Scenes/End bad.unity
   EndGoodScenePath: Assets/Scenes/End good.unity
