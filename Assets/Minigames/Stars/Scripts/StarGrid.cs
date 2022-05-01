@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,7 +16,8 @@ public class StarGrid : MonoBehaviour
     private int yStarAmount = 11;
     private float starSpace = .70f;
     private Star[,] stars;
-    private float starScale = 2;
+    private float starScale = 1;
+    private float rightStarScale = 3;
     private bool started = false;
     private bool ded = false;
 
@@ -80,14 +82,16 @@ public class StarGrid : MonoBehaviour
         started = false;
         ded = false;
         stars = new Star[xStarAmount,yStarAmount];
-        for(int x = 0; x < xStarAmount; x++)
+        transform.DOComplete();
+        transform.DOShakeScale(0.2f, 0.03f, 20);
+        for (int x = 0; x < xStarAmount; x++)
         {
             for (int y = 0; y < yStarAmount; y++)
             {
                 stars[x, y] = Instantiate(starPrefab, transform).GetComponent<Star>();
                 stars[x, y].transform.position = transform.position + new Vector3(x * starSpace - xStarAmount * starSpace / 2, y * starSpace - yStarAmount * starSpace / 2, 0) ;
                 //stars[x, y].Lives = orderedCoordinates.FindAll(i => (i.x, i.y) == (x, y)).Count;
-                stars[x, y].GetComponent<SpriteRenderer>().color = Random.ColorHSV(0, 1, 0, 1, 1, 1, 1, 1);
+                stars[x, y].GetComponent<SpriteRenderer>().color = Random.ColorHSV(0, 1, .5f, 1, 1, 1, 1, 1);
                 stars[x, y].transform.localScale = new Vector3(starScale, starScale, starScale);
                 stars[x, y].Coordinates = (x, y);
                 stars[x, y].Grid = this;
@@ -98,13 +102,18 @@ public class StarGrid : MonoBehaviour
 
     void Update()
     {
-        if(started && !ControlManager.Instance.Controls.Gameplay.Click.IsPressed() && !ded) 
-        {
-            started = false;
-            FeedbackManager.Instance.DidBad();
-            TimelineController.Instance.ReloadCurrentMinigame();
-            ded = true;
-        }
+        //if(started && !ControlManager.Instance.Controls.Gameplay.Click.IsPressed() && !ded) 
+        //{
+        //    started = false;
+        //    Failed();
+        //}
+    }
+    void Failed()
+    {
+        FeedbackManager.Instance.DidBad();
+        TimelineController.Instance.ReloadCurrentMinigame();
+
+        ded = true;
     }
     public void CheckSelection((int x, int y) coords)
     {
@@ -119,19 +128,25 @@ public class StarGrid : MonoBehaviour
                 {
                     started = true;
                 }
+                FeedbackManager.Instance.DidGood();
+
                 //stars[coords.x, coords.y].gameObject.GetComponent<BoxCollider2D>().enabled = false;
                 stars[coords.x, coords.y].Ready = false;
-                stars[coords.x, coords.y].GetComponent<SpriteRenderer>().color = Random.ColorHSV(1, 1, 1, 1, 1, 1, 1, 1);
+                stars[coords.x, coords.y].GetComponent<SpriteRenderer>().color = Random.ColorHSV(1, 1, 0, 0, 1, 1, 1, 1);
+                stars[coords.x, coords.y].transform.DOScale(rightStarScale, .2f);
+                stars[coords.x, coords.y].transform.localScale = new Vector3(starScale, starScale, starScale);
+                
                 orderedCoordinates.RemoveAt(0);
+                if(orderedCoordinates.Count == 0)
+                {
+                    FeedbackManager.Instance.FinishedMiniGameGood();
+                }
             }
             else
             {
                 if (!ded)
                 {
-                    Debug.Log("OOF" + coords.x + "   " + coords.y);
-                    FeedbackManager.Instance.DidBad();
-                    TimelineController.Instance.ReloadCurrentMinigame();
-                    ded = true;
+                    Failed();
                 }
             }
         }
