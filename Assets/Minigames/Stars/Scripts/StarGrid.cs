@@ -122,7 +122,7 @@ public class StarGrid : MonoBehaviour
             {
                 Debug.Log("OOF" + coords.x + "   " + coords.y);
                 FeedbackManager.Instance.DidBad();
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                TimelineController.Instance.ReloadCurrentMinigame();
             }
         }
     }
