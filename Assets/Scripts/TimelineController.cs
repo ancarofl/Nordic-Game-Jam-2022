@@ -38,13 +38,15 @@ public class TimelineController : MonoBehaviour
             LoadScene(introScenePath);
             timer.gameObject.SetActive(false);
         }
+
+        LoadScene(EndGoodScenePath);
     }
 
     void LoadScene(string scenePath)
     {
         Debug.Log("About to load scene: " + scenePath);
 
-        if(ControlManager.Instance.Controls.Gameplay.Click.IsPressed())
+        if (ControlManager.Instance.Controls.Gameplay.Click.IsPressed())
         {
             ControlManager.Instance.Controls.Gameplay.Click.Disable();
             clickDisabled = true;
@@ -81,7 +83,7 @@ public class TimelineController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(clickDisabled && ControlManager.Instance.Controls.Gameplay.UnClick.IsPressed())
+        if (clickDisabled && ControlManager.Instance.Controls.Gameplay.UnClick.IsPressed())
         {
             ControlManager.Instance.Controls.Gameplay.Click.Enable();
             clickDisabled = false;
@@ -116,6 +118,7 @@ public class TimelineController : MonoBehaviour
 
     public void MinigameFailed()
     {
+        Destroy(timer);
         LoadScene(EndBadScenePath);
     }
 
@@ -158,6 +161,7 @@ public class TimelineController : MonoBehaviour
                 snakeGameState = minigameState.completed;
                 cauldrenGameState = minigameState.completed;
                 starGameState = minigameState.completed;
+                Destroy(timer);
                 LoadScene(EndGoodScenePath);
                 break;
         }

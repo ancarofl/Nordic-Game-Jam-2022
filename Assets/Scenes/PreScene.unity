@@ -712,7 +712,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cursor: {fileID: 699569173}
   _cursorSpriteRenderer: {fileID: 699569175}
-  gamepadCursorSpeed: 0.05
+  gamepadCursorSpeed: 0.04
   mouseSpeed: 0.02
 --- !u!4 &1118919779
 Transform:
@@ -1292,7 +1292,7 @@ MonoBehaviour:
   roomScenePath: Assets/Scenes/Room.unity
   snakeScenePath: Assets/Scenes/SnakeGameScene.unity
   cauldrenScenePath: Assets/Minigames/Cauldron/CauldronMinigame.unity
-  starsScenePath: 
+  starsScenePath: Assets/Minigames/Stars/StarsScene.unity
   EndBadScenePath: Assets/Scenes/End bad.unity
   EndGoodScenePath: Assets/Scenes/End good.unity
   snakeGameState: 0

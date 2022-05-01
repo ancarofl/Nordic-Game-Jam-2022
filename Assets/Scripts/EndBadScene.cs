@@ -10,6 +10,10 @@ public class EndBadScene : MonoBehaviour
     void Start()
     {
         ControlManager.Instance.HideCursor();
+        MusicManager.Instance.BassVolume = 0;
+        MusicManager.Instance.DrumVolume = 0;
+        MusicManager.Instance.PianoVolume = 0;
+        MusicManager.Instance.ShakerVolume = 0;
     }
 
     // Update is called once per frame

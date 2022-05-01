@@ -17,4 +17,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SnakeGameScene.unity
     guid: 1d8c8a6aadff0a747ab4c5ffd70e69eb
+  - enabled: 1
+    path: Assets/Scenes/End good.unity
+    guid: a797b08244ed0bf48a2bbc44b7ea1faf
+  - enabled: 1
+    path: Assets/Scenes/End bad.unity
+    guid: 47ebb3853263643438da5c67a78c7ff8
+  - enabled: 1
+    path: Assets/Minigames/Cauldron/CauldronMinigame.unity
+    guid: fb3b59b483c074088a09505382f99557
+  - enabled: 1
+    path: Assets/Minigames/Stars/StarsScene.unity
+    guid: 11e136c35913d5a43baff0479675e885
   m_configObjects: {}
