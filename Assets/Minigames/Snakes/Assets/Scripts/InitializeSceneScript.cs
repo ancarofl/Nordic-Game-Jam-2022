@@ -380,6 +380,11 @@ public class InitializeSceneScript : MonoBehaviour
 
     }
 
+    void WinMinigame()
+    {
+        FeedbackManager.Instance.FinishedMiniGameGood();
+    }
+
     void DisableSnake()
     {
         selectedSnake.SetActive(false);
@@ -388,7 +393,7 @@ public class InitializeSceneScript : MonoBehaviour
         // TODO: If the player won, cleanup(?) and call FinishedMiniGameGood(). 
         if (IsVictory())
         {
-            Debug.Log("GG, YOU WIN!");
+            WinMinigame();
         }
         // Otherwise advance to the next snake.
         else
