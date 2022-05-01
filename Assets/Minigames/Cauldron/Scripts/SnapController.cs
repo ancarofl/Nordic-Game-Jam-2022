@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +20,11 @@ public class SnapController : MonoBehaviour
     void Start()
     {
         ControlManager.Instance.ShowCursor();
+
+        DOTween.To(() => MusicManager.Instance.PianoVolume, (x) => MusicManager.Instance.PianoVolume = x, 0f, 3f).SetEase(Ease.InQuad);
+        DOTween.To(() => MusicManager.Instance.DrumVolume, (x) => MusicManager.Instance.DrumVolume = x, 0f, 3f).SetEase(Ease.InQuad);
+        DOTween.To(() => MusicManager.Instance.BassVolume, (x) => MusicManager.Instance.BassVolume = x, 0f, 3f).SetEase(Ease.InQuad);
+        MusicManager.Instance.ShakerVolume = 0f;
 
         Dragger.dragEndedCallback = OnDragEnded;
         winningRecipe = new List<string> { "Claw", "Feather", "Boquet", "Rain" };

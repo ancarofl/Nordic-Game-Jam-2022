@@ -7,18 +7,18 @@ public class TimelineController : MonoBehaviour
 {
     public static TimelineController Instance { get; private set; }
 
-    string _currentScene = null;
+    int _currentScene = -1;
     [SerializeField] bool _disableIntroInEditor = true;
 
     public Timer timer;
 
-    public string introScenePath;
-    public string roomScenePath;
-    public string snakeScenePath;
-    public string cauldrenScenePath;
-    public string starsScenePath;
-    public string EndBadScenePath;
-    public string EndGoodScenePath;
+    public int introScenePath;
+    public int roomScenePath;
+    public int snakeScenePath;
+    public int cauldrenScenePath;
+    public int starsScenePath;
+    public int EndBadScenePath;
+    public int EndGoodScenePath;
 
     enum gameState { first, second, third }
     gameState _gameState;
@@ -33,16 +33,12 @@ public class TimelineController : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        if (!_disableIntroInEditor && Application.isEditor)
-        {
-            LoadScene(introScenePath);
-            timer.gameObject.SetActive(false);
-        }
 
-        LoadScene(EndGoodScenePath);
+        LoadScene(introScenePath);
+        timer.gameObject.SetActive(false);
     }
 
-    void LoadScene(string scenePath)
+    void LoadScene(int scenePath)
     {
         Debug.Log("About to load scene: " + scenePath);
 
@@ -52,7 +48,7 @@ public class TimelineController : MonoBehaviour
             clickDisabled = true;
         }
 
-        if (_currentScene != null)
+        if (_currentScene != -1)
             SceneManager.UnloadSceneAsync(_currentScene);
         else
         {
@@ -133,7 +129,7 @@ public class TimelineController : MonoBehaviour
         {
             var scene = SceneManager.GetSceneAt(i);
             if (scene.name == "PreScene") continue;
-            _currentScene = scene.path;
+            _currentScene = scene.buildIndex;
         }
 
         LoadScene(_currentScene);

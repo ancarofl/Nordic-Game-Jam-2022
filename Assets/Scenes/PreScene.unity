@@ -1286,15 +1286,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 637ed82f75646334e86ce9b7614a1aa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _disableIntroInEditor: 1
+  _disableIntroInEditor: 0
   timer: {fileID: 438938500}
-  introScenePath: Assets/Scenes/Intro.unity
-  roomScenePath: Assets/Scenes/Room.unity
-  snakeScenePath: Assets/Scenes/SnakeGameScene.unity
-  cauldrenScenePath: Assets/Minigames/Cauldron/CauldronMinigame.unity
-  starsScenePath: Assets/Minigames/Stars/StarsScene.unity
-  EndBadScenePath: Assets/Scenes/End bad.unity
-  EndGoodScenePath: Assets/Scenes/End good.unity
+  introScenePath: 1
+  roomScenePath: 2
+  snakeScenePath: 3
+  cauldrenScenePath: 6
+  starsScenePath: 7
+  EndBadScenePath: 5
+  EndGoodScenePath: 4
   snakeGameState: 0
   cauldrenGameState: 1
   starGameState: 0

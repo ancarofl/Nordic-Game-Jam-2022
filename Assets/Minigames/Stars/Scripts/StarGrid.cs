@@ -98,6 +98,10 @@ public class StarGrid : MonoBehaviour
             }
         }
         Random.InitState(101);
+
+        DOTween.To(() => MusicManager.Instance.PianoVolume, (x) => MusicManager.Instance.PianoVolume = x, 0f, 3f).SetEase(Ease.InQuad);
+        DOTween.To(() => MusicManager.Instance.DrumVolume, (x) => MusicManager.Instance.DrumVolume = x, 1f, 3f).SetEase(Ease.InQuad);
+        DOTween.To(() => MusicManager.Instance.BassVolume, (x) => MusicManager.Instance.BassVolume = x, 0f, 3f).SetEase(Ease.InQuad);
     }
 
     void Update()

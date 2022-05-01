@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -66,6 +67,10 @@ public class InitializeSceneScript : MonoBehaviour
         skipSnakes = new List<int>();
         GenerateSnakes();
         DetermineWinningActionsForSnakeConfiguration(); /* TODO: Rename? */
+
+        DOTween.To(() => MusicManager.Instance.PianoVolume, (x) => MusicManager.Instance.PianoVolume = x, 1f, 3f).SetEase(Ease.InQuad);
+        DOTween.To(() => MusicManager.Instance.DrumVolume, (x) => MusicManager.Instance.DrumVolume = x, 1f, 3f).SetEase(Ease.InQuad);
+        DOTween.To(() => MusicManager.Instance.BassVolume, (x) => MusicManager.Instance.BassVolume = x, 1f, 3f).SetEase(Ease.InQuad);
     }
 
     void DetermineWinningActionsForSnakeConfiguration()
