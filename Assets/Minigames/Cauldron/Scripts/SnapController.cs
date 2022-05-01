@@ -19,7 +19,7 @@ public class SnapController : MonoBehaviour
     void Start()
     {       
             Dragger.dragEndedCallback = OnDragEnded;
-            winningRecipe = new List<string>{"Carrot", "Eyeball"}; 
+            winningRecipe = new List<string>{"Claw", "Feather", "Boquet", "Rain"}; 
             sourceAudio = GetComponent<AudioSource>();
             currentIndex = 0;
             // play id 
