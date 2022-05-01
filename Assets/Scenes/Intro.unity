@@ -412,9 +412,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Player one controls the game
+  m_text: 'You enter your childhood bedroom.
 
-    Ask player 2 for what to do'
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3947fd74452c9264882e3afaeaf23630, type: 2}
   m_sharedMaterial: {fileID: 6718227306361530463, guid: 3947fd74452c9264882e3afaeaf23630, type: 2}
@@ -441,8 +441,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 62.9
-  m_fontSizeBase: 62.9
+  m_fontSize: 46.24
+  m_fontSizeBase: 46.24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
