@@ -42,7 +42,7 @@ public class SnapController : MonoBehaviour
        if(closestSnapPoint !=null && closestDistance <= snapRange){
            draggable.transform.localPosition = closestSnapPoint.localPosition;
             // Snapped draggable properties
-            Debug.Log(draggable.name_ing);   
+            // Debug.Log(draggable.name_ing);   
             var check = winningRecipe.IndexOf(draggable.name_ing);         
             if(check == currentIndex){
                 

@@ -38,7 +38,7 @@ public class Dragger : MonoBehaviour
     }
     private void OnMouseDown() {
         // _dragOffset = transform.position - getMousePos();
-        Debug.Log("Clicked");
+        // Debug.Log("Clicked");
                 // ingSound.PlayOneShot(clip, volume);
 
     }
@@ -78,8 +78,8 @@ public class Dragger : MonoBehaviour
         //     Debug.Log("HELLLO");
         // }
 
-        Debug.Log(controlsManager.Controls.Gameplay.Click.triggered);  
-        Debug.Log(controlsManager.Controls.Gameplay.Click.IsPressed());
+        // Debug.Log(controlsManager.Controls.Gameplay.Click.triggered);  
+        // Debug.Log(controlsManager.Controls.Gameplay.Click.IsPressed());
 
     }
     
