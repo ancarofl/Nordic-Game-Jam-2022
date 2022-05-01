@@ -20,14 +20,20 @@ public class TimelineController : MonoBehaviour
     public string EndBadScenePath;
     public string EndGoodScenePath;
 
-    public bool snakeGameEnabled = true;
-    public bool cauldrenGameEnabled = false;
-    public bool starGameEnabled = false;
+    enum gameState { first, second, third }
+    gameState _gameState;
+
+    public enum minigameState { locked, open, completed }
+    public minigameState snakeGameState = minigameState.locked;
+    public minigameState cauldrenGameState = minigameState.open;
+    public minigameState starGameState = minigameState.locked;
 
     void Awake()
     {
         Instance = this;
         LoadScene(introScenePath);
+        if (!_disableInEditor)
+            timer.gameObject.SetActive(false);
     }
 
     void LoadScene(string scenePath)
@@ -58,14 +64,13 @@ public class TimelineController : MonoBehaviour
 
     public void PlaySnakes()
     {
-        snakeGameEnabled = false;
         LoadScene(snakeScenePath);
     }
 
     public void IntroFinished()
     {
         LoadScene(roomScenePath);
-        timer.StartTimer();
+        timer.gameObject.SetActive(true);
     }
 
     public void EndSceneFinished()
@@ -73,8 +78,45 @@ public class TimelineController : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
+    public void MinigameFailed()
+    {
+        LoadScene(EndBadScenePath);
+    }
+
     public void TimeRanOut()
     {
         LoadScene(EndBadScenePath);
+    }
+
+    public void ReloadCurrentMinigame()
+    {
+        LoadScene(_currentScene);
+    }
+
+    public void ReturnFromMinigame()
+    {
+        switch (_gameState)
+        {
+            case gameState.first:
+                _gameState = gameState.second;
+                snakeGameState = minigameState.open;
+                cauldrenGameState = minigameState.completed;
+                starGameState = minigameState.locked;
+                LoadScene(roomScenePath);
+                break;
+            case gameState.second:
+                _gameState = gameState.third;
+                snakeGameState = minigameState.completed;
+                cauldrenGameState = minigameState.completed;
+                starGameState = minigameState.open;
+                LoadScene(roomScenePath);
+                break;
+            case gameState.third:
+                snakeGameState = minigameState.completed;
+                cauldrenGameState = minigameState.completed;
+                starGameState = minigameState.completed;
+                LoadScene(EndGoodScenePath);
+                break;
+        }
     }
 }

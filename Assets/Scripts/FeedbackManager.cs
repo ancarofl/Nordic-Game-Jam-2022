@@ -27,6 +27,17 @@ public class FeedbackManager : MonoBehaviour
         timer.RemoveTime(10f);
     }
 
+    public void FinishedMiniGameGood()
+    {
+        timer.AddTime(2f*60f);
+        TimelineController.Instance.ReturnFromMinigame();
+    }
+
+    public void FinishedMiniGameBad()
+    {
+        TimelineController.Instance.MinigameFailed();
+    }
+
     // Update is called once per frame
     void Update()
     {
