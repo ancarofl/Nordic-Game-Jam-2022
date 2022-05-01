@@ -303,7 +303,7 @@ public class InitializeSceneScript : MonoBehaviour
 
     void LoseMinigame()
     {
-        Debug.Log("YOU LOSE!");
+        FeedbackManager.Instance.DidBad();
     }
 
     // Update is called once per frame
