@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.U2D;
 
 public class StarGrid : MonoBehaviour
@@ -13,6 +14,7 @@ public class StarGrid : MonoBehaviour
     private float starSpace = .70f;
     private Star[,] stars;
     private float starScale = 2;
+    private bool started = false;
 
     private List<(int x,int y)> orderedCoordinates = new List<(int x, int y)>()
         {
@@ -72,6 +74,7 @@ public class StarGrid : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ControlManager.Instance.MoveCursorToScreenSpace(new Vector2(0.1f, 0.1f));
         stars = new Star[xStarAmount,yStarAmount];
         for(int x = 0; x < xStarAmount; x++)
         {
@@ -79,6 +82,7 @@ public class StarGrid : MonoBehaviour
             {
                 stars[x, y] = Instantiate(starPrefab, transform).GetComponent<Star>();
                 stars[x, y].transform.position = transform.position + new Vector3(x * starSpace - xStarAmount * starSpace / 2, y * starSpace - yStarAmount * starSpace / 2, 0) ;
+                //stars[x, y].Lives = orderedCoordinates.FindAll(i => (i.x, i.y) == (x, y)).Count;
                 stars[x, y].GetComponent<SpriteRenderer>().color = Random.ColorHSV(0, 1, 0, 1, 1, 1, 1, 1);
                 stars[x, y].transform.localScale = new Vector3(starScale, starScale, starScale);
                 stars[x, y].Coordinates = (x, y);
@@ -90,13 +94,36 @@ public class StarGrid : MonoBehaviour
 
     void Update()
     {
-        
+        if(started && !ControlManager.Instance.Controls.Gameplay.Click.IsPressed()) 
+        {
+            started = false;
+            FeedbackManager.Instance.DidBad();
+        }
     }
     public void CheckSelection((int x, int y) coords)
     {
-        if (orderedCoordinates.Contains(coords)){
-            Debug.Log("OOF");
-        }
+        if (stars[coords.x, coords.y].Ready)
+        {
+            if (orderedCoordinates[0] == coords)
+            {
 
+                Debug.Log("YOOS:" + coords.x + "   " + coords.y + "  ");
+
+                if (!started)
+                {
+                    started = true;
+                }
+                //stars[coords.x, coords.y].gameObject.GetComponent<BoxCollider2D>().enabled = false;
+                stars[coords.x, coords.y].Ready = false;
+                stars[coords.x, coords.y].GetComponent<SpriteRenderer>().color = Random.ColorHSV(1, 1, 1, 1, 1, 1, 1, 1);
+                orderedCoordinates.RemoveAt(0);
+            }
+            else
+            {
+                Debug.Log("OOF" + coords.x + "   " + coords.y);
+                FeedbackManager.Instance.DidBad();
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+        }
     }
 }
