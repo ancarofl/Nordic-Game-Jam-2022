@@ -331,7 +331,23 @@ public class InitializeSceneScript : MonoBehaviour
     {
         selectedSnake.SetActive(false);
         skipSnakes.Add(selectedSnakeIndex);
-        SelectNextSnake();
+
+        // TODO: If the player won, cleanup(?) and call FinishedMiniGameGood(). 
+        if (IsVictory())
+        {
+            Debug.Log("GG, YOU WIN!");
+        }
+        // Otherwise advance to the next snake.
+        else
+        {
+            SelectNextSnake();
+        }
+    }
+
+    /* The player wins when all the snakes have been dealt with. */
+    bool IsVictory()
+    {
+        return skipSnakes.Count == snakeNumber;
     }
 
     /* TODO: Improve code. */
@@ -382,13 +398,6 @@ public class InitializeSceneScript : MonoBehaviour
     /* TODO: I like spaghetti but improve this code anyway. */
     void SelectNextSnake()
     {
-        // Check if all snakes disabled. Then player won.
-        if (skipSnakes.Count == snakeNumber)
-        {
-            Debug.Log("GG WON");
-            return;
-        }
-
         // If not last element of the array: index = next index
         if (selectedSnakeIndex < snakeNumber - 1)
         {
